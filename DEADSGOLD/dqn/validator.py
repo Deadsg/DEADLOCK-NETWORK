@@ -7,7 +7,13 @@ import os
 from blockchain.transaction import Transaction
 
 class DQNValidator:
-    def __init__(self, model_path="DQNAgent/Q_Layered_Network/dqn_node_model.onnx"):
+    def __init__(self, model_path=None):
+        if model_path is None:
+            # Construct path relative to the project root
+            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+            model_path = os.path.join(project_root, "DQNAgent", "Q_Layered_Network", "dqn_node_model.onnx")
+
+        print(f"Attempting to load ONNX model from: {model_path}") # Debug print
         self.session = onnxruntime.InferenceSession(model_path)
         self.input_name = self.session.get_inputs()[0].name
         self.output_name = self.session.get_outputs()[0].name

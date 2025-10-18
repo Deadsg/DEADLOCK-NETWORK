@@ -6,18 +6,20 @@ from tkinter import ttk, messagebox
 import threading
 from uuid import uuid4
 
+# Add project root to sys.path for module imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from wallet.wallet import Wallet
 from blockchain.chain import Blockchain
 from blockchain.transaction import Transaction
+from solders.pubkey import Pubkey
 from solana_integration.client import SolanaClient
 
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-        self.pack()
+        self.pack(fill="both", expand=True)
 
         self.wallet = Wallet()
         self.blockchain = Blockchain()
@@ -157,8 +159,8 @@ class Application(tk.Frame):
                 block.index,
                 block.timestamp,
                 transactions_str,
-                block.previous_hash[-10:],
-                block.hash[-10:],
+                block.previous_hash[-10:] if block.previous_hash else "",
+                block.hash[-10:] if block.hash else "",
                 block.nonce
             ))
 
@@ -197,6 +199,7 @@ class Application(tk.Frame):
 
         self.solana_public_key_var = tk.StringVar()
         self.solana_balance_var = tk.StringVar()
+        self.solana_private_key_input_var = tk.StringVar() # New: for private key input
 
         ttk.Label(solana_info_frame, text="Public Key:").grid(row=0, column=0, sticky="w")
         ttk.Entry(solana_info_frame, textvariable=self.solana_public_key_var, state="readonly").grid(row=0, column=1, sticky="ew")
@@ -204,8 +207,13 @@ class Application(tk.Frame):
         ttk.Label(solana_info_frame, text="Balance:").grid(row=1, column=0, sticky="w")
         ttk.Entry(solana_info_frame, textvariable=self.solana_balance_var, state="readonly").grid(row=1, column=1, sticky="ew")
 
-        ttk.Button(solana_info_frame, text="Generate New Keypair", command=self.generate_solana_keypair).grid(row=2, column=0, sticky="w")
-        ttk.Button(solana_info_frame, text="Update Solana Balance", command=self.update_solana_balance).grid(row=2, column=1, sticky="e")
+        # New: Private Key Input
+        ttk.Label(solana_info_frame, text="Private Key (Base58):").grid(row=2, column=0, sticky="w")
+        ttk.Entry(solana_info_frame, textvariable=self.solana_private_key_input_var, show="*").grid(row=2, column=1, sticky="ew") # show='*' to hide key
+
+        ttk.Button(solana_info_frame, text="Generate New Keypair", command=self.generate_solana_keypair).grid(row=3, column=0, sticky="w")
+        ttk.Button(solana_info_frame, text="Load Keypair from Input", command=self.load_solana_keypair_from_input).grid(row=3, column=1, sticky="w", padx=(0, 5))
+        ttk.Button(solana_info_frame, text="Update Solana Balance", command=self.update_solana_balance).grid(row=3, column=1, sticky="e")
 
         # Airdrop
         airdrop_frame = ttk.LabelFrame(self.solana_frame, text="Solana Airdrop (Devnet/Testnet)")
@@ -231,15 +239,31 @@ class Application(tk.Frame):
 
         ttk.Button(transfer_sol_frame, text="Transfer", command=self.transfer_solana_tokens).grid(row=2, column=1, sticky="e")
 
+    def load_solana_keypair_from_input(self):
+        private_key_str = self.solana_private_key_input_var.get()
+        if not private_key_str:
+            messagebox.showerror("Error", "Please enter a private key.")
+            return
+
+        try:
+            # Assuming private key is base58 encoded
+            from solders.keypair import Keypair
+            self.solana_keypair = Keypair.from_base58_string(private_key_str)
+            self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
+            self.update_solana_balance()
+            messagebox.showinfo("Solana", "Keypair loaded successfully!")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load keypair: {e}\nEnsure it is a valid Base58 encoded private key.")
+
     def generate_solana_keypair(self):
         self.solana_keypair = self.solana_client.generate_keypair()
-        self.solana_public_key_var.set(str(self.solana_keypair.public_key))
+        self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
         self.update_solana_balance()
         messagebox.showinfo("Solana", "New Solana Keypair Generated!")
 
     def update_solana_balance(self):
         if self.solana_keypair:
-            balance = self.solana_client.get_balance(self.solana_keypair.public_key)
+            balance = self.solana_client.get_balance(self.solana_keypair.pubkey())
             self.solana_balance_var.set(f"{balance:.4f} SOL")
         else:
             self.solana_balance_var.set("N/A")
@@ -258,7 +282,7 @@ class Application(tk.Frame):
             return
 
         try:
-            signature = self.solana_client.request_airdrop(self.solana_keypair.public_key, amount)
+            signature = self.solana_client.request_airdrop(self.solana_keypair.pubkey(), amount)
             messagebox.showinfo("Solana Airdrop", f"Airdrop requested! Signature: {signature}")
             self.update_solana_balance()
         except Exception as e:
@@ -277,7 +301,7 @@ class Application(tk.Frame):
             return
 
         try:
-            recipient_public_key = PublicKey(recipient_pubkey_str)
+            recipient_public_key = Pubkey.from_string(recipient_pubkey_str)
         except ValueError:
             messagebox.showerror("Error", "Invalid recipient public key.")
             return
@@ -302,5 +326,24 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("DEADSGOLD GUI")
+    root.configure(bg="black") # Set root background to black
+
+    # Configure ttk style for a black background
+    style = ttk.Style()
+    style.theme_use('clam') # 'clam' theme is often easier to customize
+    style.configure('TFrame', background='black')
+    style.configure('TNotebook', background='black')
+    style.configure('TNotebook.Tab', background='black', foreground='white')
+    style.map('TNotebook.Tab', background=[('selected', '#333333')], foreground=[('selected', 'white')])
+    style.configure('TLabel', background='black', foreground='white')
+    style.configure('TLabelFrame', background='black', foreground='white')
+    style.configure('TLabelFrame.Label', background='black', foreground='white')
+    style.configure('TEntry', fieldbackground='#333333', foreground='white', insertcolor='white')
+    style.configure('TButton', background='#333333', foreground='white')
+    style.map('TButton', background=[('active', '#555555')])
+    style.configure('Treeview', background='black', foreground='white', fieldbackground='black')
+    style.map('Treeview', background=[('selected', '#555555')])
+    style.configure('Treeview.Heading', background='#333333', foreground='white')
+
     app = Application(master=root)
     app.mainloop()
