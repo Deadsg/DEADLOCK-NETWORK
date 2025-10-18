@@ -6,7 +6,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet
 import base64
-import os # Needed for os.urandom
+import os
+import base58
 
 class Wallet:
     """
@@ -26,26 +27,31 @@ class Wallet:
         )
         return base64.urlsafe_b64encode(kdf.derive(password.encode()))
 
-    def __init__(self, password: str = None, encrypted_private_key_data: bytes = None, salt: bytes = None):
-        self._private_key = None # Store the actual private key object
+    def __init__(self, password: str = None, encrypted_private_key_data: bytes = None, salt: bytes = None, private_key: ed25519.Ed25519PrivateKey = None):
+        self._private_key = private_key
         self._encrypted_private_key_data = None
         self._salt = None
 
         if encrypted_private_key_data and salt and password:
             self._encrypted_private_key_data = encrypted_private_key_data
             self._salt = salt
-            self.decrypt_private_key(password) # Decrypt and set _private_key
-        else:
-            # Generate a new key if not loading encrypted one
+            self.decrypt_private_key(password)
+        elif not self._private_key:
             self._private_key = ed25519.Ed25519PrivateKey.generate()
             if password:
-                self.encrypt_private_key(password) # Encrypt the newly generated key
+                self.encrypt_private_key(password)
 
-        self.public_key = self._private_key.public_key() # Public key is always derived from the decrypted private key
+        if self._private_key:
+            self.public_key = self._private_key.public_key()
+
+    @classmethod
+    def from_solana_private_key(cls, private_key_b58: str):
+        private_key_bytes = base58.b58decode(private_key_b58)
+        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
+        return cls(private_key=private_key)
 
     @property
     def private_key(self):
-        # Always return the decrypted private key object
         return self._private_key
 
     def encrypt_private_key(self, password: str) -> None:
@@ -56,14 +62,13 @@ class Wallet:
         key = self._derive_key(password, self._salt)
         f = Fernet(key)
 
-        # Serialize the private key before encryption
         serialized_private_key = self._private_key.private_bytes(
             encoding=serialization.Encoding.Raw,
             format=serialization.PrivateFormat.Raw,
             encryption_algorithm=serialization.NoEncryption()
         )
         self._encrypted_private_key_data = f.encrypt(serialized_private_key)
-        self._private_key = None # Clear the decrypted key from memory after encryption
+        self._private_key = None
 
     def decrypt_private_key(self, password: str) -> None:
         if not self._encrypted_private_key_data or not self._salt:
@@ -76,20 +81,20 @@ class Wallet:
             decrypted_private_key_bytes = f.decrypt(self._encrypted_private_key_data)
             self._private_key = ed25519.Ed25519PrivateKey.from_private_bytes(decrypted_private_key_bytes)
         except Exception as e:
-            self._private_key = None # Ensure key is cleared on decryption failure
+            self._private_key = None
             raise ValueError(f"Failed to decrypt private key: {e}")
 
     @property
     def address(self) -> str:
         """
-        Returns the wallet's address (the public key serialized as PEM).
+        Returns the wallet's address (the public key in base58).
         """
-        if not self._private_key:
-            raise ValueError("Private key not loaded or decrypted.")
-        return self._private_key.public_key().public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo
-        ).hex()
+        if not self.public_key:
+            raise ValueError("Public key not available.")
+        return base58.b58encode(self.public_key.public_bytes(
+            encoding=serialization.Encoding.Raw,
+            format=serialization.PublicFormat.Raw
+        )).decode('utf-8')
 
     @property
     def private_key_hex(self) -> str:
@@ -113,15 +118,13 @@ class Wallet:
         return self._private_key.sign(data)
 
     @staticmethod
-    def verify(public_key_hex: str, signature: bytes, data: bytes) -> bool:
+    def verify(public_key_b58: str, signature: bytes, data: bytes) -> bool:
         """
         Verifies the signature of the given data using the public key.
         """
         try:
-            public_key_bytes = bytes.fromhex(public_key_hex)
-            public_key = serialization.load_pem_public_key(
-                public_key_bytes,
-            )
+            public_key_bytes = base58.b58decode(public_key_b58)
+            public_key = ed25519.Ed25519PublicKey.from_public_bytes(public_key_bytes)
             public_key.verify(signature, data)
             return True
         except Exception:

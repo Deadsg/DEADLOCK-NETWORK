@@ -2,7 +2,7 @@
 import sys
 import os
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, simpledialog
 import threading
 from uuid import uuid4
 
@@ -21,7 +21,16 @@ class Application(tk.Frame):
         self.master = master
         self.pack(fill="both", expand=True)
 
-        self.wallet = Wallet()
+        private_key_b58 = tk.simpledialog.askstring("Solana Private Key", "Please enter your Solana private key (base58):")
+        if not private_key_b58:
+            self.master.destroy()
+            return
+        try:
+            self.wallet = Wallet.from_solana_private_key(private_key_b58)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load wallet from private key: {e}")
+            self.master.destroy()
+            return
         self.blockchain = Blockchain()
         self.node_identifier = str(uuid4()).replace('-', '')
         self.solana_client = SolanaClient()
