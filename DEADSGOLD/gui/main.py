@@ -57,7 +57,8 @@ class Application(tk.Frame):
 
         self.address_var = tk.StringVar(value=self.wallet.address)
         self.balance_var = tk.StringVar()
-        self.update_balance()
+        self.private_key_var = tk.StringVar() # New: for private key display
+        self.update_wallet_info() # Call a new method to update all wallet info
 
         ttk.Label(wallet_info_frame, text="Address:").grid(row=0, column=0, sticky="w")
         ttk.Entry(wallet_info_frame, textvariable=self.address_var, state="readonly").grid(row=0, column=1, sticky="ew")
@@ -65,7 +66,12 @@ class Application(tk.Frame):
         ttk.Label(wallet_info_frame, text="Balance:").grid(row=1, column=0, sticky="w")
         ttk.Entry(wallet_info_frame, textvariable=self.balance_var, state="readonly").grid(row=1, column=1, sticky="ew")
 
-        ttk.Button(wallet_info_frame, text="Update Balance", command=self.update_balance).grid(row=2, column=1, sticky="e")
+        ttk.Label(wallet_info_frame, text="Private Key:").grid(row=2, column=0, sticky="w")
+        ttk.Entry(wallet_info_frame, textvariable=self.private_key_var, state="readonly", show="*").grid(row=2, column=1, sticky="ew") # show='*' for security
+
+        ttk.Label(wallet_info_frame, text="WARNING: Keep your private key secret!", foreground="red").grid(row=3, column=0, columnspan=2, sticky="w")
+
+        ttk.Button(wallet_info_frame, text="Update Balance", command=self.update_wallet_info).grid(row=4, column=1, sticky="e")
 
         # Send Transaction
         send_frame = ttk.LabelFrame(self.wallet_frame, text="Send Transaction")
@@ -82,9 +88,16 @@ class Application(tk.Frame):
 
         ttk.Button(send_frame, text="Send", command=self.send_transaction).grid(row=2, column=1, sticky="e")
 
-    def update_balance(self):
+    def update_wallet_info(self):
+        # Update balance
         balance = self.blockchain.get_balance(self.wallet.address)
         self.balance_var.set(str(balance))
+        # Update private key display
+        self.private_key_var.set(self.wallet.private_key_hex)
+
+    def update_balance(self):
+        # This method is now redundant, update_wallet_info should be called instead
+        self.update_wallet_info()
 
     def send_transaction(self):
         recipient = self.recipient_var.get()
@@ -108,7 +121,7 @@ class Application(tk.Frame):
             messagebox.showinfo("Success", "Transaction sent successfully!")
             self.recipient_var.set("")
             self.amount_var.set("")
-            self.update_balance()
+            self.update_wallet_info() # Call update_wallet_info here
         else:
             messagebox.showerror("Error", "Transaction failed validation and was rejected.")
 
@@ -181,6 +194,7 @@ class Application(tk.Frame):
         last_proof = last_block.nonce
         proof = self.blockchain.proof_of_work(last_proof)
 
+        # Miner gets 1 Deadsgold reward for mining a block
         self.blockchain.new_transaction(
             Transaction(sender="0", recipient=self.node_identifier, amount=1)
         )
@@ -188,8 +202,28 @@ class Application(tk.Frame):
         previous_hash = self.blockchain.last_block.hash
         block = self.blockchain.new_block(proof, previous_hash)
 
-        self.update_balance()
+        self.update_wallet_info() # Update Deadsgold balance
         self.update_blockchain_view()
+
+        # --- Simulated Trade for Solana ---
+        deadsgold_reward = 1 # The reward for mining
+        simulated_dg_to_sol_rate = 0.01 # 1 Deadsgold = 0.01 SOL (simulated)
+        simulated_sol_gained = deadsgold_reward * simulated_dg_to_sol_rate
+
+        if self.solana_keypair: # Only simulate if a Solana keypair is loaded
+            # Conceptually add SOL to the displayed balance
+            current_sol_balance_str = self.solana_balance_var.get().replace(" SOL", "")
+            try:
+                current_sol_balance = float(current_sol_balance_str) if current_sol_balance_str != "N/A" else 0.0
+                new_sol_balance = current_sol_balance + simulated_sol_gained
+                self.solana_balance_var.set(f"{new_sol_balance:.4f} SOL")
+                messagebox.showinfo("Simulated Trade", f"Miner traded {deadsgold_reward} Deadsgold for {simulated_sol_gained:.4f} SOL (simulated).")
+            except ValueError:
+                messagebox.showwarning("Simulated Trade", "Could not update Solana balance after simulated trade.")
+        else:
+            messagebox.showwarning("Simulated Trade", "No Solana keypair loaded to receive simulated SOL.")
+        # --- End Simulated Trade ---
+
         self.mine_button.config(state=tk.NORMAL, text="Start Mining")
         messagebox.showinfo("Success", f"New Block Forged: {block.index}")
 
@@ -197,9 +231,15 @@ class Application(tk.Frame):
         solana_info_frame = ttk.LabelFrame(self.solana_frame, text="Solana Wallet")
         solana_info_frame.pack(fill="x", padx=10, pady=10)
 
+    def create_solana_tab(self):
+        # Solana Wallet Info
+        solana_info_frame = ttk.LabelFrame(self.solana_frame, text="Solana Wallet Information")
+        solana_info_frame.pack(fill="x", padx=10, pady=10)
+
         self.solana_public_key_var = tk.StringVar()
         self.solana_balance_var = tk.StringVar()
-        self.solana_private_key_input_var = tk.StringVar() # New: for private key input
+        self.solana_private_key_input_var = tk.StringVar()
+        self.solana_private_key_display_var = tk.StringVar()
 
         ttk.Label(solana_info_frame, text="Public Key:").grid(row=0, column=0, sticky="w")
         ttk.Entry(solana_info_frame, textvariable=self.solana_public_key_var, state="readonly").grid(row=0, column=1, sticky="ew")
@@ -207,26 +247,45 @@ class Application(tk.Frame):
         ttk.Label(solana_info_frame, text="Balance:").grid(row=1, column=0, sticky="w")
         ttk.Entry(solana_info_frame, textvariable=self.solana_balance_var, state="readonly").grid(row=1, column=1, sticky="ew")
 
-        # New: Private Key Input
-        ttk.Label(solana_info_frame, text="Private Key (Base58):").grid(row=2, column=0, sticky="w")
-        ttk.Entry(solana_info_frame, textvariable=self.solana_private_key_input_var, show="*").grid(row=2, column=1, sticky="ew") # show='*' to hide key
+        ttk.Label(solana_info_frame, text="Private Key:").grid(row=2, column=0, sticky="w")
+        self.solana_private_key_entry = ttk.Entry(solana_info_frame, textvariable=self.solana_private_key_display_var, state="readonly", show="*")
+        self.solana_private_key_entry.grid(row=2, column=1, sticky="ew")
 
-        ttk.Button(solana_info_frame, text="Generate New Keypair", command=self.generate_solana_keypair).grid(row=3, column=0, sticky="w")
-        ttk.Button(solana_info_frame, text="Load Keypair from Input", command=self.load_solana_keypair_from_input).grid(row=3, column=1, sticky="w", padx=(0, 5))
-        ttk.Button(solana_info_frame, text="Update Solana Balance", command=self.update_solana_balance).grid(row=3, column=1, sticky="e")
+        # Buttons for key management and balance update
+        button_frame = ttk.Frame(solana_info_frame)
+        button_frame.grid(row=3, column=0, columnspan=2, sticky="ew", pady=5)
+        button_frame.columnconfigure(0, weight=1)
+        button_frame.columnconfigure(1, weight=1)
+        button_frame.columnconfigure(2, weight=1)
+
+        ttk.Button(button_frame, text="Generate New Keypair", command=self.generate_solana_keypair).grid(row=0, column=0, sticky="ew", padx=2)
+        ttk.Button(button_frame, text="Load Keypair from Input", command=self.load_solana_keypair_from_input).grid(row=0, column=1, sticky="ew", padx=2)
+        ttk.Button(button_frame, text="Toggle Private Key", command=self.toggle_solana_private_key_visibility).grid(row=0, column=2, sticky="ew", padx=2)
+
+        ttk.Button(solana_info_frame, text="Update Solana Balance", command=self.update_solana_balance).grid(row=4, column=0, columnspan=2, sticky="ew", pady=5)
+
+        # New: Private Key Input (moved to its own section for clarity)
+        load_key_frame = ttk.LabelFrame(self.solana_frame, text="Load Private Key")
+        load_key_frame.pack(fill="x", padx=10, pady=10)
+        load_key_frame.columnconfigure(1, weight=1)
+
+        ttk.Label(load_key_frame, text="Private Key (Base58):").grid(row=0, column=0, sticky="w")
+        ttk.Entry(load_key_frame, textvariable=self.solana_private_key_input_var, show="*").grid(row=0, column=1, sticky="ew")
 
         # Airdrop
         airdrop_frame = ttk.LabelFrame(self.solana_frame, text="Solana Airdrop (Devnet/Testnet)")
         airdrop_frame.pack(fill="x", padx=10, pady=10)
+        airdrop_frame.columnconfigure(1, weight=1)
 
         self.airdrop_amount_var = tk.StringVar(value="1.0")
         ttk.Label(airdrop_frame, text="Amount (SOL):").grid(row=0, column=0, sticky="w")
         ttk.Entry(airdrop_frame, textvariable=self.airdrop_amount_var).grid(row=0, column=1, sticky="ew")
-        ttk.Button(airdrop_frame, text="Request Airdrop", command=self.request_solana_airdrop).grid(row=1, column=1, sticky="e")
+        ttk.Button(airdrop_frame, text="Request Airdrop", command=self.request_solana_airdrop).grid(row=1, column=0, columnspan=2, sticky="ew")
 
         # Transfer SOL
         transfer_sol_frame = ttk.LabelFrame(self.solana_frame, text="Transfer SOL")
         transfer_sol_frame.pack(fill="x", padx=10, pady=10)
+        transfer_sol_frame.columnconfigure(1, weight=1)
 
         self.solana_recipient_var = tk.StringVar()
         self.solana_transfer_amount_var = tk.StringVar()
@@ -237,7 +296,14 @@ class Application(tk.Frame):
         ttk.Label(transfer_sol_frame, text="Amount (SOL):").grid(row=1, column=0, sticky="w")
         ttk.Entry(transfer_sol_frame, textvariable=self.solana_transfer_amount_var).grid(row=1, column=1, sticky="ew")
 
-        ttk.Button(transfer_sol_frame, text="Transfer", command=self.transfer_solana_tokens).grid(row=2, column=1, sticky="e")
+        ttk.Button(transfer_sol_frame, text="Transfer", command=self.transfer_solana_tokens).grid(row=2, column=0, columnspan=2, sticky="ew")
+
+    def toggle_solana_private_key_visibility(self):
+        current_show = self.solana_private_key_entry.cget("show")
+        if current_show == "*":
+            self.solana_private_key_entry.config(show="")
+        else:
+            self.solana_private_key_entry.config(show="*")
 
     def load_solana_keypair_from_input(self):
         private_key_str = self.solana_private_key_input_var.get()
@@ -246,18 +312,20 @@ class Application(tk.Frame):
             return
 
         try:
-            # Assuming private key is base58 encoded
             from solders.keypair import Keypair
             self.solana_keypair = Keypair.from_base58_string(private_key_str)
             self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
+            self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string()) # Corrected
             self.update_solana_balance()
             messagebox.showinfo("Solana", "Keypair loaded successfully!")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load keypair: {e}\nEnsure it is a valid Base58 encoded private key.")
 
     def generate_solana_keypair(self):
-        self.solana_keypair = self.solana_client.generate_keypair()
+        from solders.keypair import Keypair
+        self.solana_keypair = Keypair()
         self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
+        self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string()) # Corrected
         self.update_solana_balance()
         messagebox.showinfo("Solana", "New Solana Keypair Generated!")
 

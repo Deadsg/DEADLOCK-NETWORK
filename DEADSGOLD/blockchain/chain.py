@@ -7,11 +7,12 @@ from dqn.validator import DQNValidator
 import time
 
 class Blockchain:
-    def __init__(self):
+    def __init__(self, use_gpu: bool = False):
         self.chain = [self.create_genesis_block()]
         self.pending_transactions = []
         self.difficulty = 2 # Proof of work difficulty
         self.validator = DQNValidator()
+        self.use_gpu = use_gpu # Flag to enable GPU mining placeholder
 
     def create_genesis_block(self):
         """
@@ -63,16 +64,34 @@ class Blockchain:
         self.chain.append(block)
         return block
 
-    def proof_of_work(self, last_proof: int) -> int:
+    def gpu_mine(self, last_proof: int) -> int:
         """
-        Simple Proof of Work Algorithm:
-         - Find a number 'proof' such that hash(last_proof, proof) contains leading zeros.
+        Placeholder for GPU-accelerated Proof of Work.
+        In a real implementation, this would call a CUDA/OpenCL kernel.
+        For now, it simulates GPU work by calling the CPU PoW.
+        """
+        print("Simulating GPU mining...")
+        # In a real scenario, you'd pass last_proof, difficulty, etc., to a GPU kernel
+        # and get the proof back. For this placeholder, we'll just use the CPU PoW.
+        return self.proof_of_work_cpu(last_proof)
+
+    def proof_of_work_cpu(self, last_proof: int) -> int:
+        """
+        Original CPU-bound Proof of Work Algorithm.
         """
         proof = 0
         while self.valid_proof(last_proof, proof) is False:
             proof += 1
-
         return proof
+
+    def proof_of_work(self, last_proof: int) -> int:
+        """
+        Dispatches to CPU or GPU PoW based on configuration.
+        """
+        if self.use_gpu:
+            return self.gpu_mine(last_proof)
+        else:
+            return self.proof_of_work_cpu(last_proof)
 
     def get_balance(self, address: str) -> float:
         """
