@@ -3,7 +3,7 @@ from setuptools import setup, Extension
 import os
 
 # You might need to adjust these paths based on your CUDA Toolkit installation
-CUDA_HOME = os.environ.get("CUDA_PATH") # Default for Linux
+CUDA_PATH = os.environ.get("CUDA_PATH") # Default for Linux
 # For Windows, it might be something like "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.x"
 
 # Ensure nvcc is in your PATH or specify its full path
@@ -14,11 +14,11 @@ pycuda_extension = Extension(
     name="pycuda._driver",
     sources=["pycuda/src/cpp/cuda.cpp", "pycuda/src/cpp/bitlog.cpp"], # Example sources, adjust as needed
     include_dirs=[
-        os.path.join(CUDA_HOME, "include"),
+        os.path.join("CUDA_PATH", "include"),
         # Add other include directories if necessary, e.g., for Boost
     ],
     library_dirs=[
-        os.path.join(CUDA_HOME, "lib64"), # Default for Linux
+        os.path.join("CUDA_PATH", "lib64"), # Default for Linux
         # For Windows, it might be something like "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.x\lib\x64"
         # Add other library directories if necessary
     ],
