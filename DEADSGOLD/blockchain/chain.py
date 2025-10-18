@@ -4,15 +4,16 @@ from .block import Block
 from .transaction import Transaction
 from wallet.wallet import Wallet
 from dqn.validator import DQNValidator
+from miner.miner import Miner
 import time
 
 class Blockchain:
     def __init__(self, use_gpu: bool = False):
         self.chain = [self.create_genesis_block()]
         self.pending_transactions = []
-        self.difficulty = 2 # Proof of work difficulty
+        self.difficulty = 4 # Proof of work difficulty
         self.validator = DQNValidator()
-        self.use_gpu = use_gpu # Flag to enable GPU mining placeholder
+        self.miner = Miner(self, use_gpu)
 
     def create_genesis_block(self):
         """
@@ -64,34 +65,12 @@ class Blockchain:
         self.chain.append(block)
         return block
 
-    def gpu_mine(self, last_proof: int) -> int:
+    def mine(self):
         """
-        Placeholder for GPU-accelerated Proof of Work.
-        In a real implementation, this would call a CUDA/OpenCL kernel.
-        For now, it simulates GPU work by calling the CPU PoW.
+        Mines a new block.
         """
-        print("Simulating GPU mining...")
-        # In a real scenario, you'd pass last_proof, difficulty, etc., to a GPU kernel
-        # and get the proof back. For this placeholder, we'll just use the CPU PoW.
-        return self.proof_of_work_cpu(last_proof)
-
-    def proof_of_work_cpu(self, last_proof: int) -> int:
-        """
-        Original CPU-bound Proof of Work Algorithm.
-        """
-        proof = 0
-        while self.valid_proof(last_proof, proof) is False:
-            proof += 1
-        return proof
-
-    def proof_of_work(self, last_proof: int) -> int:
-        """
-        Dispatches to CPU or GPU PoW based on configuration.
-        """
-        if self.use_gpu:
-            return self.gpu_mine(last_proof)
-        else:
-            return self.proof_of_work_cpu(last_proof)
+        proof = self.miner.mine()
+        return self.new_block(proof)
 
     def get_balance(self, address: str) -> float:
         """
@@ -106,10 +85,8 @@ class Blockchain:
                     balance -= tx.amount
         return balance
 
-    def valid_proof(self, last_proof: int, proof: int) -> bool:
+    def valid_proof(self, block: Block) -> bool:
         """
-        Validates the proof: Does hash(last_proof, proof) contain <difficulty> leading zeros?
+        Validates the proof: Does the hash of the block contain <difficulty> leading zeros?
         """
-        guess = f'{last_proof}{proof}'.encode()
-        guess_hash = hashlib.sha256(guess).hexdigest()
-        return guess_hash[:self.difficulty] == "0" * self.difficulty
+        return block.hash[:self.difficulty] == "0" * self.difficulty
