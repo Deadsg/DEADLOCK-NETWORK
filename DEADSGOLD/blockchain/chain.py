@@ -8,12 +8,12 @@ from miner.miner import Miner
 import time
 
 class Blockchain:
-    def __init__(self, use_gpu: bool = False):
+    def __init__(self):
         self.chain = [self.create_genesis_block()]
         self.pending_transactions = []
         self.difficulty = 4 # Proof of work difficulty
         self.validator = DQNValidator()
-        self.miner = Miner(self, use_gpu)
+        self.miner = Miner(self)
 
     def create_genesis_block(self):
         """

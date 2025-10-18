@@ -1,4 +1,3 @@
-
 import sys
 import os
 import tkinter as tk
@@ -21,22 +20,32 @@ class Application(tk.Frame):
         self.master = master
         self.pack(fill="both", expand=True)
 
-        private_key_b58 = tk.simpledialog.askstring("Solana Private Key", "Please enter your Solana private key (base58):")
-        if not private_key_b58:
-            self.master.destroy()
-            return
-        try:
-            self.wallet = Wallet.from_solana_private_key(private_key_b58)
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to load wallet from private key: {e}")
-            self.master.destroy()
-            return
+        # Initialize core components
+        self.wallet = None # Will be loaded later
         self.blockchain = Blockchain()
         self.node_identifier = str(uuid4()).replace('-', '')
         self.solana_client = SolanaClient()
         self.solana_keypair = None
 
         self.create_widgets()
+
+        # Prompt for initial wallet load (private key or mnemonic)
+        self.prompt_initial_wallet_load()
+
+    def prompt_initial_wallet_load(self):
+        # This will be a simplified prompt for now, can be expanded later
+        private_key_b58 = simpledialog.askstring("Wallet Initialization", "Enter Solana private key (base58) or leave blank to generate new:")
+        if private_key_b58:
+            try:
+                self.wallet = Wallet.from_solana_private_key(private_key_b58)
+                self.update_wallet_info()
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load wallet from private key: {e}\nGenerating new wallet.")
+                self.wallet = Wallet()
+                self.update_wallet_info()
+        else:
+            self.wallet = Wallet()
+            self.update_wallet_info()
 
     def create_widgets(self):
         self.notebook = ttk.Notebook(self)
@@ -59,15 +68,25 @@ class Application(tk.Frame):
         self.create_miner_tab()
         self.create_solana_tab()
 
+    def update_wallet_info(self):
+        if self.wallet:
+            self.address_var.set(self.wallet.address)
+            balance = self.blockchain.get_balance(self.wallet.address)
+            self.balance_var.set(str(balance))
+            self.private_key_var.set(self.wallet.private_key_hex)
+        else:
+            self.address_var.set("N/A")
+            self.balance_var.set("N/A")
+            self.private_key_var.set("N/A")
+
     def create_wallet_tab(self):
         # Wallet Info
         wallet_info_frame = ttk.LabelFrame(self.wallet_frame, text="Wallet Information")
         wallet_info_frame.pack(fill="x", padx=10, pady=10)
 
-        self.address_var = tk.StringVar(value=self.wallet.address)
+        self.address_var = tk.StringVar()
         self.balance_var = tk.StringVar()
-        self.private_key_var = tk.StringVar() # New: for private key display
-        self.update_wallet_info() # Call a new method to update all wallet info
+        self.private_key_var = tk.StringVar()
 
         ttk.Label(wallet_info_frame, text="Address:").grid(row=0, column=0, sticky="w")
         ttk.Entry(wallet_info_frame, textvariable=self.address_var, state="readonly").grid(row=0, column=1, sticky="ew")
@@ -76,7 +95,7 @@ class Application(tk.Frame):
         ttk.Entry(wallet_info_frame, textvariable=self.balance_var, state="readonly").grid(row=1, column=1, sticky="ew")
 
         ttk.Label(wallet_info_frame, text="Private Key:").grid(row=2, column=0, sticky="w")
-        ttk.Entry(wallet_info_frame, textvariable=self.private_key_var, state="readonly", show="*").grid(row=2, column=1, sticky="ew") # show='*' for security
+        ttk.Entry(wallet_info_frame, textvariable=self.private_key_var, state="readonly", show="*").grid(row=2, column=1, sticky="ew")
 
         ttk.Label(wallet_info_frame, text="WARNING: Keep your private key secret!", foreground="red").grid(row=3, column=0, columnspan=2, sticky="w")
 
@@ -97,18 +116,22 @@ class Application(tk.Frame):
 
         ttk.Button(send_frame, text="Send", command=self.send_transaction).grid(row=2, column=1, sticky="e")
 
-    def update_wallet_info(self):
-        # Update balance
-        balance = self.blockchain.get_balance(self.wallet.address)
-        self.balance_var.set(str(balance))
-        # Update private key display
-        self.private_key_var.set(self.wallet.private_key_hex)
+        # Load Wallet from Mnemonic
+        mnemonic_frame = ttk.LabelFrame(self.wallet_frame, text="Load Wallet from Mnemonic")
+        mnemonic_frame.pack(fill="x", padx=10, pady=10)
 
-    def update_balance(self):
-        # This method is now redundant, update_wallet_info should be called instead
-        self.update_wallet_info()
+        self.mnemonic_var = tk.StringVar()
+
+        ttk.Label(mnemonic_frame, text="Mnemonic Phrase:").grid(row=0, column=0, sticky="w")
+        ttk.Entry(mnemonic_frame, textvariable=self.mnemonic_var).grid(row=0, column=1, sticky="ew")
+
+        ttk.Button(mnemonic_frame, text="Load Wallet", command=self.load_wallet_from_mnemonic).grid(row=1, column=1, sticky="e")
 
     def send_transaction(self):
+        if not self.wallet:
+            messagebox.showerror("Error", "No wallet loaded.")
+            return
+
         recipient = self.recipient_var.get()
         amount_str = self.amount_var.get()
 
@@ -130,9 +153,23 @@ class Application(tk.Frame):
             messagebox.showinfo("Success", "Transaction sent successfully!")
             self.recipient_var.set("")
             self.amount_var.set("")
-            self.update_wallet_info() # Call update_wallet_info here
+            self.update_wallet_info()
         else:
             messagebox.showerror("Error", "Transaction failed validation and was rejected.")
+
+    def load_wallet_from_mnemonic(self):
+        mnemonic_phrase = self.mnemonic_var.get()
+        if not mnemonic_phrase:
+            messagebox.showerror("Error", "Please enter a mnemonic phrase.")
+            return
+
+        try:
+            self.wallet = Wallet.from_mnemonic(mnemonic_phrase)
+            self.update_wallet_info()
+            messagebox.showinfo("Success", "Wallet loaded from mnemonic successfully!")
+            self.mnemonic_var.set("")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load wallet from mnemonic: {e}")
 
     def create_blockchain_tab(self):
         blockchain_frame = ttk.Frame(self.blockchain_frame)
@@ -211,16 +248,15 @@ class Application(tk.Frame):
         previous_hash = self.blockchain.last_block.hash
         block = self.blockchain.new_block(proof, previous_hash)
 
-        self.update_wallet_info() # Update Deadsgold balance
+        self.update_wallet_info()
         self.update_blockchain_view()
 
         # --- Simulated Trade for Solana ---
-        deadsgold_reward = 1 # The reward for mining
-        simulated_dg_to_sol_rate = 0.01 # 1 Deadsgold = 0.01 SOL (simulated)
+        deadsgold_reward = 1
+        simulated_dg_to_sol_rate = 0.01
         simulated_sol_gained = deadsgold_reward * simulated_dg_to_sol_rate
 
-        if self.solana_keypair: # Only simulate if a Solana keypair is loaded
-            # Conceptually add SOL to the displayed balance
+        if self.solana_keypair:
             current_sol_balance_str = self.solana_balance_var.get().replace(" SOL", "")
             try:
                 current_sol_balance = float(current_sol_balance_str) if current_sol_balance_str != "N/A" else 0.0
@@ -235,10 +271,6 @@ class Application(tk.Frame):
 
         self.mine_button.config(state=tk.NORMAL, text="Start Mining")
         messagebox.showinfo("Success", f"New Block Forged: {block.index}")
-
-    def create_solana_tab(self):
-        solana_info_frame = ttk.LabelFrame(self.solana_frame, text="Solana Wallet")
-        solana_info_frame.pack(fill="x", padx=10, pady=10)
 
     def create_solana_tab(self):
         # Solana Wallet Info
@@ -324,7 +356,7 @@ class Application(tk.Frame):
             from solders.keypair import Keypair
             self.solana_keypair = Keypair.from_base58_string(private_key_str)
             self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
-            self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string()) # Corrected
+            self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string())
             self.update_solana_balance()
             messagebox.showinfo("Solana", "Keypair loaded successfully!")
         except Exception as e:
@@ -334,7 +366,7 @@ class Application(tk.Frame):
         from solders.keypair import Keypair
         self.solana_keypair = Keypair()
         self.solana_public_key_var.set(str(self.solana_keypair.pubkey()))
-        self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string()) # Corrected
+        self.solana_private_key_display_var.set(self.solana_keypair.secret().to_base58_string())
         self.update_solana_balance()
         messagebox.showinfo("Solana", "New Solana Keypair Generated!")
 
@@ -403,11 +435,10 @@ class Application(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("DEADSGOLD GUI")
-    root.configure(bg="black") # Set root background to black
+    root.configure(bg="black")
 
-    # Configure ttk style for a black background
     style = ttk.Style()
-    style.theme_use('clam') # 'clam' theme is often easier to customize
+    style.theme_use('clam')
     style.configure('TFrame', background='black')
     style.configure('TNotebook', background='black')
     style.configure('TNotebook.Tab', background='black', foreground='white')

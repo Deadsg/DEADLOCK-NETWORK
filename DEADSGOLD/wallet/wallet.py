@@ -8,6 +8,7 @@ from cryptography.fernet import Fernet
 import base64
 import os
 import base58
+from solders.keypair import Keypair
 
 class Wallet:
     """
@@ -47,6 +48,18 @@ class Wallet:
     @classmethod
     def from_solana_private_key(cls, private_key_b58: str):
         private_key_bytes = base58.b58decode(private_key_b58)
+        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
+        return cls(private_key=private_key)
+
+    @classmethod
+    def from_mnemonic(cls, mnemonic_phrase: str):
+        # Derive Solana Keypair from mnemonic
+        solana_keypair = Keypair.from_seed_phrase_and_passphrase(mnemonic_phrase, "") # No passphrase for simplicity
+        
+        # Extract private key bytes from Solana Keypair
+        private_key_bytes = solana_keypair.secret().to_bytes()
+        
+        # Create ed25519 private key from bytes
         private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
         return cls(private_key=private_key)
 
