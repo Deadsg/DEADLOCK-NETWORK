@@ -1,5 +1,4 @@
-cryptography
-onnxruntime
+solders
 solana
-anchorpy
-base58
+spl-token
+cryptography

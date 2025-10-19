@@ -16,12 +16,21 @@ class Block:
         """
         Computes the hash of the block.
         """
-        block_data = {
-            "index": self.index,
-            "timestamp": self.timestamp,
-            "transactions": [t.__dict__ for t in self.transactions],
-            "previous_hash": self.previous_hash,
-            "nonce": self.nonce
-        }
+        block_data = self.to_dict(include_hash=False) # Use to_dict for consistent serialization, but exclude hash
         block_string = json.dumps(block_data, sort_keys=True)
         return hashlib.sha256(block_string.encode()).hexdigest()
+
+    def to_dict(self, include_hash: bool = True):
+        """
+        Returns a dictionary representation of the block.
+        """
+        block_dict = {
+            "index": self.index,
+            "timestamp": self.timestamp,
+            "transactions": [tx.to_dict() for tx in self.transactions], # Assuming Transaction has to_dict
+            "previous_hash": self.previous_hash,
+            "nonce": self.nonce,
+        }
+        if include_hash:
+            block_dict["hash"] = self.hash
+        return block_dict

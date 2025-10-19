@@ -52,6 +52,12 @@ class Wallet:
         return cls(private_key=private_key)
 
     @classmethod
+    def from_private_key_hex(cls, private_key_hex: str):
+        private_key_bytes = bytes.fromhex(private_key_hex)
+        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
+        return cls(private_key=private_key)
+
+    @classmethod
     def from_mnemonic(cls, mnemonic_phrase: str):
         # Derive Solana Keypair from mnemonic
         solana_keypair = Keypair.from_seed_phrase_and_passphrase(mnemonic_phrase, "") # No passphrase for simplicity
@@ -117,8 +123,8 @@ class Wallet:
         if not self._private_key:
             raise ValueError("Private key not loaded or decrypted.")
         return self._private_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
+            encoding=serialization.Encoding.Raw,
+            format=serialization.PrivateFormat.Raw,
             encryption_algorithm=serialization.NoEncryption()
         ).hex()
 

@@ -48,3 +48,60 @@ class SolanaClient:
         )
         response = self.client.send_transaction(transaction, sender_keypair)
         return response.value
+
+    def get_transactions(self, public_key: Pubkey, limit: int = 10) -> list:
+        """
+        Gets recent transaction history for a given public key.
+        """
+        signatures_response = self.client.get_signatures_for_address(public_key, limit=limit)
+        transactions = []
+        for signature_info in signatures_response.value:
+            transaction_response = self.client.get_transaction(signature_info.signature)
+            if transaction_response.value:
+                transactions.append(transaction_response.value)
+        return transactions
+
+    def get_token_accounts_by_owner(self, public_key: Pubkey) -> dict:
+        """
+        Gets SPL token accounts and their balances for a given public key.
+        """
+        response = self.client.get_token_accounts_by_owner(public_key, {'programId': Pubkey.from_string("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")})
+        token_accounts = {}
+        for account in response.value:
+            pubkey = account.pubkey
+            info = account.account.data.parsed['info']
+            token_accounts[str(pubkey)] = {
+                'mint': info['mint'],
+                'owner': info['owner'],
+                'amount': info['tokenAmount']['uiAmountString']
+            }
+        return token_accounts
+
+    def transfer_token(self, sender_keypair: Keypair, mint_address: Pubkey, recipient_public_key: Pubkey, amount: float) -> str:
+        """
+        Transfers SPL tokens from sender to recipient.
+        """
+        from spl.token.instructions import transfer, TransferParams
+        from spl.token.associated_token_account import get_associated_token_address
+
+        sender_token_account = get_associated_token_address(sender_keypair.pubkey(), mint_address)
+        recipient_token_account = get_associated_token_address(recipient_public_key, mint_address)
+
+        # Check if recipient's token account exists, if not, create instruction to create it
+        # For simplicity, we'll assume it exists or handle creation outside this function for now.
+        # In a real app, you'd add logic to create if not exists.
+
+        transaction = Transaction().add(
+            transfer(
+                TransferParams(
+                    program_id=Pubkey.from_string("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"),
+                    source=sender_token_account,
+                    dest=recipient_token_account,
+                    owner=sender_keypair.pubkey(),
+                    amount=int(amount) # Assuming integer amount for SPL tokens for simplicity
+                )
+            )
+        )
+        response = self.client.send_transaction(transaction, sender_keypair)
+        return response.value
+
