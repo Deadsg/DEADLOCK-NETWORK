@@ -6,14 +6,16 @@ from wallet.wallet import Wallet
 from dqn.validator import DQNValidator
 from miner.miner import Miner
 import time
+import threading
 
 class Blockchain:
-    def __init__(self):
+    def __init__(self, mining_interrupt_event: threading.Event = None):
         self.chain = [self.create_genesis_block()]
         self.pending_transactions = []
         self.difficulty = 4 # Proof of work difficulty
         self.validator = DQNValidator()
         self.miner = Miner(self)
+        self.mining_interrupt_event = mining_interrupt_event
 
     def create_genesis_block(self):
         """
@@ -90,3 +92,21 @@ class Blockchain:
         Validates the proof: Does the hash of the block contain <difficulty> leading zeros?
         """
         return block.hash[:self.difficulty] == "0" * self.difficulty
+
+    def proof_of_work(self, last_proof: int) -> int:
+        """
+        Simple Proof of Work Algorithm:
+         - Find a number p' such that hash(last_block_data + p') contains leading 0s equal to difficulty
+         - last_block_data is the data of the last block, including its nonce
+        """
+        proof = 0
+        while self.valid_proof_attempt(proof) is False:
+            if self.mining_interrupt_event and self.mining_interrupt_event.is_set():
+                return None # Indicate that mining was interrupted
+            proof += 1
+        return proof
+
+    def valid_proof_attempt(self, proof: int) -> bool:
+        guess = f'{self.last_block.hash}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:self.difficulty] == "0" * self.difficulty

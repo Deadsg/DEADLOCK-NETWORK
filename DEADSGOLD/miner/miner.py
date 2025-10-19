@@ -20,7 +20,7 @@ class Miner:
         return self.mine_cpu()
 
     def mine_cpu(self):
-        return self.blockchain.proof_of_work()
+        return self.blockchain.proof_of_work(self.blockchain.last_block.nonce)
 
     # def mine_gpu(self):
     #     last_block = self.blockchain.last_block
