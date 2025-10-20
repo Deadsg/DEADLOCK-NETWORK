@@ -1,13 +1,9 @@
 
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from flask import Flask, jsonify, request
 from uuid import uuid4
 
-from blockchain.chain import Blockchain
-from blockchain.transaction import Transaction
+from DEADSGOLD.blockchain.chain import Blockchain
+from DEADSGOLD.blockchain.transaction import Transaction
 
 # Instantiate the Node
 app = Flask(__name__)

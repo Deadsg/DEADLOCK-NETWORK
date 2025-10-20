@@ -1,16 +1,10 @@
-import sys
-import os
-
-# Add the project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from blockchain.chain import Blockchain
-from blockchain.transaction import Transaction
-from wallet.wallet import Wallet
+from DEADSGOLD.blockchain.chain import Blockchain
+from DEADSGOLD.blockchain.transaction import Transaction
+from DEADSGOLD.wallet.wallet import Wallet
 
 app = FastAPI()
 

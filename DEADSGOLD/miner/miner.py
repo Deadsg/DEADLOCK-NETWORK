@@ -4,25 +4,20 @@ import json
 from time import time
 import multiprocessing
 
-from blockchain.block import Block
-from blockchain.transaction import Transaction
+from DEADSGOLD.blockchain.block import Block
+from DEADSGOLD.blockchain.transaction import Transaction
 
 
-def _proof_of_work_worker(start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty):
+def _proof_of_work_worker(start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty):
     """
     Worker function for multiprocessing to find a valid nonce within a given range.
     """
-    last_block = Block(last_block_data['index'], [], last_block_data['previous_hash'], last_block_data['nonce'], last_block_data['timestamp'])
-    # Reconstruct transactions from data
-    pending_transactions = [Transaction(tx['sender'], tx['recipient'], tx['amount'], bytes.fromhex(tx['signature'])) if tx['signature'] else Transaction(tx['sender'], tx['recipient'], tx['amount']) for tx in pending_transactions_data]
-
     for nonce in range(start_nonce, end_nonce):
-        # print(f"Worker {multiprocessing.current_process().name} searching nonce: {nonce}") # Optional: for very verbose output
         block_data = {
-            "index": last_block.index + 1,
-            "timestamp": time(),
-            "transactions": [tx.to_dict() for tx in pending_transactions],
-            "previous_hash": last_block.hash,
+            "index": block_index,
+            "timestamp": block_timestamp,
+            "transactions": pending_transactions_data,
+            "previous_hash": block_previous_hash,
             "nonce": nonce,
         }
         block_string = json.dumps(block_data, sort_keys=True)
@@ -47,7 +42,9 @@ class Miner:
         pool = multiprocessing.Pool(processes=num_cores)
 
         # Prepare data for workers (serialize objects)
-        last_block_data = last_block.to_dict()
+        block_index = last_block.index + 1
+        block_previous_hash = last_block.hash
+        block_timestamp = time()
         pending_transactions_data = [tx.to_dict() for tx in pending_transactions]
 
         # Divide the nonce search space
@@ -60,7 +57,7 @@ class Miner:
             start_nonce = i * chunk_size
             end_nonce = (i + 1) * chunk_size
             results.append(pool.apply_async(_proof_of_work_worker, (
-                start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty
+                start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty
             )))
 
         # Continuously add more tasks if no nonce is found
@@ -76,7 +73,7 @@ class Miner:
                     start_nonce = nonce_offset + i * chunk_size
                     end_nonce = nonce_offset + (i + 1) * chunk_size
                     results[i] = pool.apply_async(_proof_of_work_worker, (
-                        start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty
+                        start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty
                     ))
             nonce_offset += num_cores * chunk_size
             if found_nonce.value == -1:

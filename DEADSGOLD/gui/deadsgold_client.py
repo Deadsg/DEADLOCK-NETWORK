@@ -1,10 +1,10 @@
 import threading
 import time
-from blockchain.chain import Blockchain
-from wallet.wallet import Wallet
-from dqn.validator import DQNValidator
-from miner.miner import Miner
-from blockchain.transaction import Transaction
+from DEADSGOLD.blockchain.chain import Blockchain
+from DEADSGOLD.wallet.wallet import Wallet
+from DEADSGOLD.dqn.validator import DQNValidator
+from DEADSGOLD.miner.miner import Miner
+from DEADSGOLD.blockchain.transaction import Transaction
 
 class DeadsgoldClient:
     def __init__(self):
@@ -64,7 +64,7 @@ class DeadsgoldClient:
             difficulty = self.blockchain.difficulty
 
             # Add a reward transaction for the miner
-            reward_transaction = Transaction("0", self.wallet.public_key, 1.0) # Assuming 1.0 unit reward
+            reward_transaction = Transaction("0", self.wallet.address, 1.0) # Assuming 1.0 unit reward
             pending_transactions.append(reward_transaction)
 
             print(f"Miner: Starting to mine block {last_block.index + 1}...")
