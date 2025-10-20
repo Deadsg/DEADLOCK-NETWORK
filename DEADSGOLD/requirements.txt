@@ -2,3 +2,4 @@ solders
 solana
 spl-token
 cryptography
+PySide6
