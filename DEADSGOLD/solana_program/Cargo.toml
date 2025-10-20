@@ -1,0 +1,20 @@
+[package]
+name = "deadsgold_solana_program"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+solana-program = "=1.18.16"
+spl-token = { version = "3.5.0", features = ["no-entrypoint"] }
+spl-associated-token-account = { version = "1.1.0", features = ["no-entrypoint"] }
+rust_hasher = { path = "../rust_hasher" }
+num_cpus = "1.16.0"
+
+[features]
+no-entrypoint = []
+
+[dev-dependencies]
+solana-sdk = "=1.18.16"

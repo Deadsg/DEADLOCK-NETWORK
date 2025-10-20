@@ -2,13 +2,35 @@
 import hashlib
 import json
 from time import time
-# import pycuda.autoinit
-# import pycuda.driver as cuda
-# from pycuda.compiler import SourceModule
-# import numpy as np
+import multiprocessing
 
 from blockchain.block import Block
+from blockchain.transaction import Transaction
 
+
+def _proof_of_work_worker(start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty):
+    """
+    Worker function for multiprocessing to find a valid nonce within a given range.
+    """
+    last_block = Block(last_block_data['index'], [], last_block_data['previous_hash'], last_block_data['nonce'], last_block_data['timestamp'])
+    # Reconstruct transactions from data
+    pending_transactions = [Transaction(tx['sender'], tx['recipient'], tx['amount'], bytes.fromhex(tx['signature'])) if tx['signature'] else Transaction(tx['sender'], tx['recipient'], tx['amount']) for tx in pending_transactions_data]
+
+    for nonce in range(start_nonce, end_nonce):
+        # print(f"Worker {multiprocessing.current_process().name} searching nonce: {nonce}") # Optional: for very verbose output
+        block_data = {
+            "index": last_block.index + 1,
+            "timestamp": time(),
+            "transactions": [tx.to_dict() for tx in pending_transactions],
+            "previous_hash": last_block.hash,
+            "nonce": nonce,
+        }
+        block_string = json.dumps(block_data, sort_keys=True)
+        computed_hash = hashlib.sha256(block_string.encode()).hexdigest()
+        if computed_hash[:difficulty] == "0" * difficulty:
+            print(f"Worker {multiprocessing.current_process().name} found nonce: {nonce}")
+            return nonce
+    return None
 
 
 class Miner:
@@ -16,11 +38,66 @@ class Miner:
         self.blockchain = blockchain
         self.use_gpu = False
 
-    def mine(self):
-        return self.mine_cpu()
+    def mine(self, last_block, pending_transactions, difficulty):
+        print(f"Mining a new block with difficulty {difficulty}...")
+        return self.mine_cpu(last_block, pending_transactions, difficulty)
 
-    def mine_cpu(self):
-        return self.blockchain.proof_of_work()
+    def mine_cpu(self, last_block, pending_transactions, difficulty):
+        num_cores = multiprocessing.cpu_count()
+        pool = multiprocessing.Pool(processes=num_cores)
+
+        # Prepare data for workers (serialize objects)
+        last_block_data = last_block.to_dict()
+        pending_transactions_data = [tx.to_dict() for tx in pending_transactions]
+
+        # Divide the nonce search space
+        chunk_size = 1000000  # Each process will check 1 million nonces at a time
+        manager = multiprocessing.Manager()
+        found_nonce = manager.Value('i', -1) # Shared variable to store the found nonce
+
+        results = []
+        for i in range(num_cores):
+            start_nonce = i * chunk_size
+            end_nonce = (i + 1) * chunk_size
+            results.append(pool.apply_async(_proof_of_work_worker, (
+                start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty
+            )))
+
+        # Continuously add more tasks if no nonce is found
+        nonce_offset = num_cores * chunk_size
+        while found_nonce.value == -1:
+            for i, res in enumerate(results):
+                if res.ready():
+                    result = res.get()
+                    if result is not None:
+                        found_nonce.value = result
+                        break
+                    # If a process finished without finding a nonce, give it a new range
+                    start_nonce = nonce_offset + i * chunk_size
+                    end_nonce = nonce_offset + (i + 1) * chunk_size
+                    results[i] = pool.apply_async(_proof_of_work_worker, (
+                        start_nonce, end_nonce, last_block_data, pending_transactions_data, difficulty
+                    ))
+            nonce_offset += num_cores * chunk_size
+            if found_nonce.value == -1:
+                time.sleep(0.1) # Small delay to prevent busy-waiting
+
+        pool.terminate()
+        pool.join()
+        print(f"Mining complete. Found nonce: {found_nonce.value}")
+        return found_nonce.value
+
+    def valid_proof_hash(self, last_block, pending_transactions, nonce, difficulty) -> bool:
+        block_data = {
+            "index": last_block.index + 1,
+            "timestamp": time(),
+            "transactions": [tx.to_dict() for tx in pending_transactions],
+            "previous_hash": last_block.hash,
+            "nonce": nonce,
+        }
+        block_string = json.dumps(block_data, sort_keys=True)
+        computed_hash = hashlib.sha256(block_string.encode()).hexdigest()
+        return computed_hash[:difficulty] == "0" * difficulty
 
     # def mine_gpu(self):
     #     last_block = self.blockchain.last_block

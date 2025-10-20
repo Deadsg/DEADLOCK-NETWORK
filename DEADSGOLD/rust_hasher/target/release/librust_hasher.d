@@ -1,0 +1,1 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/rust_hasher/target/release/librust_hasher.so: /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/rust_hasher/src/lib.rs

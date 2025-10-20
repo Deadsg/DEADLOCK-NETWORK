@@ -8,6 +8,9 @@ from miner.miner import Miner
 import time
 
 class Blockchain:
+    TARGET_BLOCK_TIME = 10 # seconds
+    DIFFICULTY_ADJUSTMENT_INTERVAL = 10 # blocks
+
     def __init__(self):
         self.chain = [self.create_genesis_block()]
         self.pending_transactions = []
@@ -19,7 +22,7 @@ class Blockchain:
         """
         Creates the very first block in the chain.
         """
-        return Block(0, [], "0")
+        return Block(0, [], "0", timestamp=time.time())
 
     @property
     def last_block(self):
@@ -56,21 +59,43 @@ class Blockchain:
             index=len(self.chain),
             transactions=self.pending_transactions,
             previous_hash=previous_hash or self.last_block.hash,
-            nonce=proof
+            nonce=proof,
+            timestamp=time.time()
         )
 
         # Reset the list of pending transactions
         self.pending_transactions = []
 
         self.chain.append(block)
+
+        # Adjust difficulty if needed
+        if block.index % self.DIFFICULTY_ADJUSTMENT_INTERVAL == 0 and block.index > 0:
+            self.adjust_difficulty()
+
         return block
 
-    def mine(self):
+    def adjust_difficulty(self):
         """
-        Mines a new block.
+        Adjusts the mining difficulty based on the time taken to mine recent blocks.
         """
-        proof = self.miner.mine()
-        return self.new_block(proof)
+        if len(self.chain) < self.DIFFICULTY_ADJUSTMENT_INTERVAL + 1:
+            return
+
+        # Get the last N blocks for adjustment
+        recent_blocks = self.chain[-(self.DIFFICULTY_ADJUSTMENT_INTERVAL + 1):]
+        time_taken = recent_blocks[-1].timestamp - recent_blocks[0].timestamp
+        expected_time = self.TARGET_BLOCK_TIME * self.DIFFICULTY_ADJUSTMENT_INTERVAL
+
+        if time_taken < expected_time / 2: # Too fast, increase difficulty significantly
+            self.difficulty += 2
+        elif time_taken < expected_time: # A bit fast, increase difficulty slightly
+            self.difficulty += 1
+        elif time_taken > expected_time * 2: # Too slow, decrease difficulty significantly
+            self.difficulty = max(1, self.difficulty - 2)
+        elif time_taken > expected_time: # A bit slow, decrease difficulty slightly
+            self.difficulty = max(1, self.difficulty - 1)
+
+        print(f"Difficulty adjusted to: {self.difficulty}")
 
     def get_balance(self, address: str) -> float:
         """
@@ -89,4 +114,4 @@ class Blockchain:
         """
         Validates the proof: Does the hash of the block contain <difficulty> leading zeros?
         """
-        return block.hash[:self.difficulty] == "0" * self.difficulty
+        return self.miner.valid_proof_hash(self.last_block, block.transactions, block.nonce, self.difficulty)
