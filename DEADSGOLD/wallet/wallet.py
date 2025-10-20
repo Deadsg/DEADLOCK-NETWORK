@@ -148,3 +148,12 @@ class Wallet:
             return True
         except Exception:
             return False
+
+    def create_transaction(self, recipient: str, amount: float):
+        """
+        Creates and signs a new transaction.
+        """
+        from DEADSGOLD.blockchain.transaction import Transaction # Import here to avoid circular dependency
+        transaction = Transaction(sender=self.address, recipient=recipient, amount=amount)
+        transaction.signature = self.sign(transaction.to_bytes())
+        return transaction
