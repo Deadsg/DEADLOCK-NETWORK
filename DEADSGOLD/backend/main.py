@@ -15,14 +15,12 @@ from wallet.wallet import Wallet
 app = FastAPI()
 
 # Configure CORS to allow requests from the frontend
-obviously_this_is_not_secure_in_prod = [
-    "http://localhost:3000",  # React app's default port
-    "YOUR_NGROK_URL_HERE" # Add your ngrok URL here for CORS
-]
+frontend_urls_str = os.getenv("FRONTEND_URLS", "http://localhost:3000")
+origins = [url.strip() for url in frontend_urls_str.split(',')]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=obviously_this_is_not_secure_in_prod,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

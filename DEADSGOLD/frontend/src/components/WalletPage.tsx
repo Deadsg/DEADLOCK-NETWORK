@@ -18,7 +18,7 @@ const WalletPage: React.FC = () => {
 
   const handleGenerateWallet = async () => {
     try {
-      const response = await fetch('YOUR_NGROK_URL_HERE/wallet/new', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/wallet/new`, {
         method: 'POST',
       });
       if (!response.ok) {
@@ -44,7 +44,7 @@ const WalletPage: React.FC = () => {
       if (!publicKey) {
         throw new Error("Please generate or import a wallet first to get the sender's public key.");
       }
-      const response = await fetch('YOUR_NGROK_URL_HERE/transaction/new', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transaction/new`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

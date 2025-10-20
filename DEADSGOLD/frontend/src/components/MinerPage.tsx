@@ -9,7 +9,7 @@ const MinerPage: React.FC = () => {
     setMiningStatus("Mining...");
     setError(null);
     try {
-      const response = await fetch('YOUR_NGROK_URL_HERE/mine', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/mine`, {
         method: 'POST',
       });
       if (!response.ok) {

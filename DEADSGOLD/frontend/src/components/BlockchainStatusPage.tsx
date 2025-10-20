@@ -8,7 +8,7 @@ const BlockchainStatusPage: React.FC = () => {
   useEffect(() => {
     const fetchBlockchainStatus = async () => {
       try {
-        const response = await fetch('YOUR_NGROK_URL_HERE/blockchain/status');
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/blockchain/status`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
