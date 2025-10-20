@@ -1,9 +1,15 @@
 
+import sys
+import os
 import unittest
 import hashlib
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
+
+# Add the project root to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from blockchain.chain import Blockchain
+from blockchain.block import Block
+from blockchain.transaction import Transaction
 
 class TestBlockchain(unittest.TestCase):
 

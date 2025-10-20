@@ -1,10 +1,10 @@
 
 import hashlib
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.wallet.wallet import Wallet
-from DEADSGOLD.dqn.validator import DQNValidator
-from DEADSGOLD.miner.miner import Miner
+from .block import Block
+from .transaction import Transaction
+from wallet.wallet import Wallet
+from dqn.validator import DQNValidator
+from miner.miner import Miner
 import time
 
 class Blockchain:

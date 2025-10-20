@@ -1,8 +1,0 @@
-WA: 8cHnN8qVut1YAC2trvgRG8tVKHbijVp6idGToPNGZnzK
-
-Address:  7BPZ9dGBQffp4HsTbMRh2YquiiKmAfwyzEvTPvmvLXQm
-Decimals:  9
-
-Signature: 49j21EVoRVadvFZdEFvx2XJZarh5Ea9xbGpyPFxcPvruRHLLSY9qxzyqH2TM9EBfgowb4Hx5Y9SPrN9g72XhGm18
-
-with this information begin to build minability for $DEADSGOLD
