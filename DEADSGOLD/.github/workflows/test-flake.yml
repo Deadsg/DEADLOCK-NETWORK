@@ -1,0 +1,28 @@
+name: Test Nix flake
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  flake-check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix (no-daemon) and enable flakes
+        run: |
+          curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+          . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+          mkdir -p "$HOME/.config/nix"
+          echo "experimental-features = nix-command flakes" >> "$HOME/.config/nix/nix.conf"
+          nix --version
+
+      - name: Run `nix flake check`
+        run: |
+          . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+          # Fail fast and show traces on error
+          nix flake check --print-trace
