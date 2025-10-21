@@ -1,137 +1,146 @@
 
-import hashlib
-import json
 import time
 import multiprocessing
+from solders.pubkey import Pubkey
+from solders.keypair import Keypair
+from solders.system_program import ID as SYSTEM_PROGRAM_ID
+from solana.rpc.api import Client
+from solders.transaction import Transaction
+from solders.instruction import Instruction, AccountMeta
+from spl.token.constants import TOKEN_PROGRAM_ID
+import sha3 as keccak
 
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
+# TODO: Replace with the actual deployed program ID
+PROGRAM_ID = Pubkey.from_string("8KWTy2J2ygMFoht4KbL2UNbAkYnt8rPsSW96TrUdxcda")
+TOKEN_MINT = Pubkey.from_string("HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj")
 
+# Seeds for PDA
+CONFIG_SEED = b"config"
+MINER_PROOF_SEED = b"miner_proof"
+BUS_SEED = b"bus"
 
-def _proof_of_work_worker(start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty):
-    """
-    Worker function for multiprocessing to find a valid nonce within a given range.
-    """
+def get_config_pda():
+    return Pubkey.find_program_address([CONFIG_SEED], PROGRAM_ID)
+
+def get_miner_proof_pda(authority: Pubkey):
+    return Pubkey.find_program_address([MINER_PROOF_SEED, bytes(authority)], PROGRAM_ID)
+
+def get_bus_pda(bus_number: int):
+    return Pubkey.find_program_address([BUS_SEED, bus_number.to_bytes(8, 'little')], PROGRAM_ID)
+
+def mine_worker(challenge: bytes, difficulty: int, start_nonce: int, end_nonce: int, result_queue):
     for nonce in range(start_nonce, end_nonce):
-        block_data = {
-            "index": block_index,
-            "timestamp": block_timestamp,
-            "transactions": pending_transactions_data,
-            "previous_hash": block_previous_hash,
-            "nonce": nonce,
-        }
-        block_string = json.dumps(block_data, sort_keys=True)
-        computed_hash = hashlib.sha256(block_string.encode()).hexdigest()
-        if computed_hash[:difficulty] == "0" * difficulty:
-            print(f"Worker {multiprocessing.current_process().name} found nonce: {nonce}")
-            return nonce
-    return None
+        hasher = keccak.new(digest_bits=256)
+        hasher.update(challenge)
+        hasher.update(nonce.to_bytes(8, 'little'))
+        hash_result = hasher.digest()
+
+        leading_zeros = 0
+        for byte in hash_result:
+            if byte == 0:
+                leading_zeros += 8
+            else:
+                leading_zeros += byte.leading_zeros()
+                break
+        
+        if leading_zeros >= difficulty:
+            result_queue.put(nonce)
+            return
+
+def main():
+    # Load keypair from file
+    with open("miner_keypair.json", "r") as f:
+        payer = Keypair.from_json(f.read())
+    
+    # Replace with your RPC endpoint
+    http_client = Client("https://api.devnet.solana.com")
+
+    config_pda, _ = get_config_pda()
+
+    try:
+        config_account_info = http_client.get_account_info(config_pda)
+        # Assuming the config account data structure is: admin (32), challenge (32), difficulty (8), reward (8), mint (32), last_reset (8)
+        config_data = config_account_info.value.data
+        challenge = config_data[32:64]
+        difficulty = int.from_bytes(config_data[64:72], 'little')
+    except Exception as e:
+        print(f"Could not fetch config: {e}")
+        return
+
+    print(f"Challenge: {challenge.hex()}")
+    print(f"Difficulty: {difficulty}")
+
+    num_processes = multiprocessing.cpu_count()
+    result_queue = multiprocessing.Queue()
+    processes = []
+
+    chunk_size = 1_000_000
+    nonce_start = 0
+
+    while result_queue.empty():
+        for i in range(num_processes):
+            start_nonce = nonce_start + i * chunk_size
+            end_nonce = start_nonce + chunk_size
+            p = multiprocessing.Process(target=mine_worker, args=(challenge, difficulty, start_nonce, end_nonce, result_queue))
+            processes.append(p)
+            p.start()
+        
+        nonce_start += num_processes * chunk_size
+
+        # Wait for a result
+        while result_queue.empty():
+            time.sleep(0.1)
+            # Check if any processes have finished
+            if not any(p.is_alive() for p in processes):
+                break # All processes finished their chunk
+
+        for p in processes:
+            if p.is_alive():
+                p.terminate()
+        
+        processes = []
 
 
-class Miner:
-    def __init__(self, blockchain):
-        self.blockchain = blockchain
-        self.use_gpu = False
+    nonce = result_queue.get()
+    print(f"Found nonce: {nonce}")
 
-    def mine(self, last_block, pending_transactions, difficulty):
-        print(f"Mining a new block with difficulty {difficulty}...")
-        return self.mine_cpu(last_block, pending_transactions, difficulty)
+    # Now, send the mine transaction
+    miner_proof_pda, _ = get_miner_proof_pda(payer.pubkey())
+    bus_pda, _ = get_bus_pda(0)
+    
+    # This will fail if the ATA does not exist. Create it first.
+    miner_token_account = Pubkey.find_program_address(
+        [bytes(payer.pubkey()), bytes(TOKEN_PROGRAM_ID), bytes(TOKEN_MINT)],
+        Pubkey.from_string("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL") # Associated Token Account Program ID
+    )[0]
 
-    def mine_cpu(self, last_block, pending_transactions, difficulty):
-        num_cores = multiprocessing.cpu_count()
-        pool = multiprocessing.Pool(processes=num_cores)
+    accounts = [
+        AccountMeta(pubkey=miner_proof_pda, is_signer=False, is_writable=True),
+        AccountMeta(pubkey=payer.pubkey(), is_signer=True, is_writable=False),
+        AccountMeta(pubkey=config_pda, is_signer=False, is_writable=False),
+        AccountMeta(pubkey=bus_pda, is_signer=False, is_writable=True),
+        AccountMeta(pubkey=miner_token_account, is_signer=False, is_writable=True),
+        AccountMeta(pubkey=TOKEN_PROGRAM_ID, is_signer=False, is_writable=False),
+        AccountMeta(pubkey=TOKEN_MINT, is_signer=False, is_writable=False),
+    ]
 
-        # Prepare data for workers (serialize objects)
-        block_index = last_block.index + 1
-        block_previous_hash = last_block.hash
-        block_timestamp = time.time()
-        pending_transactions_data = [tx.to_dict() for tx in pending_transactions]
+    # Mine instruction enum is 2
+    instruction_data = b'\x02' + nonce.to_bytes(8, 'little')
+    
+    instruction = Instruction(
+        program_id=PROGRAM_ID,
+        accounts=accounts,
+        data=instruction_data
+    )
 
-        # Divide the nonce search space
-        chunk_size = 1000000  # Each process will check 1 million nonces at a time
-        manager = multiprocessing.Manager()
-        found_nonce = manager.Value('i', -1) # Shared variable to store the found nonce
+    transaction = Transaction().add(instruction)
+    
+    try:
+        result = http_client.send_transaction(transaction, payer)
+        print(f"Transaction successful: {result.value}")
+    except Exception as e:
+        print(f"Transaction failed: {e}")
 
-        results = []
-        for i in range(num_cores):
-            start_nonce = i * chunk_size
-            end_nonce = (i + 1) * chunk_size
-            results.append(pool.apply_async(_proof_of_work_worker, (
-                start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty
-            )))
 
-        # Continuously add more tasks if no nonce is found
-        nonce_offset = num_cores * chunk_size
-        while found_nonce.value == -1:
-            for i, res in enumerate(results):
-                if res.ready():
-                    result = res.get()
-                    if result is not None:
-                        found_nonce.value = result
-                        break
-                    # If a process finished without finding a nonce, give it a new range
-                    start_nonce = nonce_offset + i * chunk_size
-                    end_nonce = nonce_offset + (i + 1) * chunk_size
-                    results[i] = pool.apply_async(_proof_of_work_worker, (
-                        start_nonce, end_nonce, block_index, block_previous_hash, block_timestamp, pending_transactions_data, difficulty
-                    ))
-            nonce_offset += num_cores * chunk_size
-            if found_nonce.value == -1:
-                time.sleep(0.1) # Small delay to prevent busy-waiting
-
-        pool.terminate()
-        pool.join()
-        print(f"Mining complete. Found nonce: {found_nonce.value}")
-        return found_nonce.value, block_timestamp
-
-    def valid_proof_hash(self, last_block, pending_transactions, nonce, difficulty, timestamp) -> bool:
-        block_data = {
-            "index": last_block.index + 1,
-            "timestamp": timestamp,
-            "transactions": [tx.to_dict() for tx in pending_transactions],
-            "previous_hash": last_block.hash,
-            "nonce": nonce,
-        }
-        block_string = json.dumps(block_data, sort_keys=True)
-        computed_hash = hashlib.sha256(block_string.encode()).hexdigest()
-        return computed_hash[:difficulty] == "0" * difficulty
-
-    # def mine_gpu(self):
-    #     last_block = self.blockchain.last_block
-    #     
-    #     block_data = {
-    #         "index": len(self.blockchain.chain),
-    #         "timestamp": time(),
-    #         "transactions": [t.__dict__ for t in self.blockchain.pending_transactions],
-    #         "previous_hash": last_block.hash,
-    #     }
-    #     block_string = json.dumps(block_data, sort_keys=True)
-    #     
-    #     target_hash = "0" * self.blockchain.difficulty + "f" * (64 - self.blockchain.difficulty)
-    #     target = bytes.fromhex(target_hash)
-    # 
-    #     result_nonce = np.zeros(1, dtype=np.uint32)
-    #     result_nonce_gpu = cuda.mem_alloc(result_nonce.nbytes)
-    #     cuda.memcpy_htod(result_nonce_gpu, result_nonce)
-    # 
-    #     block_data_gpu = cuda.mem_alloc(len(block_string))
-    #     cuda.memcpy_htod(block_data_gpu, block_string.encode('utf-8'))
-    # 
-    #     target_gpu = cuda.mem_alloc(len(target))
-    #     cuda.memcpy_htod(target_gpu, target)
-    # 
-    #     # Define grid and block dimensions
-    #     threads_per_block = 256
-    #     blocks_per_grid = (pycuda.autoinit.device.get_attribute(cuda.device_attribute.MULTIPROCESSOR_COUNT) * 16)
-    # 
-    #     self.find_nonce(
-    #         block_data_gpu,
-    #         np.int32(len(block_string)),
-    #         target_gpu,
-    #         result_nonce_gpu,
-    #         block=(threads_per_block, 1, 1),
-    #         grid=(blocks_per_grid, 1)
-    #     )
-    # 
-    #     cuda.memcpy_dtoh(result_nonce, result_nonce_gpu)
-    #     return result_nonce[0]
+if __name__ == "__main__":
+    main()

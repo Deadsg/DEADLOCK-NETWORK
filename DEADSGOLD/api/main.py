@@ -1,106 +1,79 @@
 
 import sys
 import os
+import multiprocessing
+from flask import Flask, jsonify
+from solders.pubkey import Pubkey
+from solders.keypair import Keypair
+from solana.rpc.api import Client
+from spl.token.client import Token
 
 # Add the project root to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from flask import Flask, jsonify, request
-from uuid import uuid4
+from miner.miner import main as mine_main, TOKEN_MINT
 
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.wallet.wallet import Wallet
-
-# Instantiate the Node
 app = Flask(__name__)
 
-# Generate a globally unique address for this node
-node_identifier = str(uuid4()).replace('-', '')
+# Global variable to hold the mining process
+mining_process = None
 
-from DEADSGOLD.miner.miner import Miner
+@app.route('/start-miner', methods=['POST'])
+def start_miner():
+    global mining_process
+    if mining_process and mining_process.is_alive():
+        return jsonify({'status': 'Miner is already running.'}), 400
 
-blockchain = Blockchain()
+    mining_process = multiprocessing.Process(target=mine_main)
+    mining_process.start()
 
-# Instantiate the Miner
-miner = Miner(blockchain)
+    return jsonify({'status': 'Miner started.'})
 
+@app.route('/stop-miner', methods=['POST'])
+def stop_miner():
+    global mining_process
+    if not mining_process or not mining_process.is_alive():
+        return jsonify({'status': 'Miner is not running.'}), 400
 
-@app.route('/mine', methods=['GET'])
-def mine():
-    # We must receive a reward for finding the proof.
-    # The sender is "0" to signify that this node has mined a new coin.
-    blockchain.new_transaction(
-        Transaction(sender="0", recipient=node_identifier, amount=1)
-    )
+    mining_process.terminate()
+    mining_process.join()
+    mining_process = None
 
-    # We run the proof of work algorithm to get the next proof...
-    last_block = blockchain.last_block
-    nonce, _ = miner.mine_cpu(last_block, blockchain.pending_transactions, blockchain.difficulty)
+    return jsonify({'status': 'Miner stopped.'})
 
-    # Forge the new Block by adding it to the chain
-    previous_hash = blockchain.last_block.hash
-    block = blockchain.new_block(nonce, previous_hash)
+@app.route('/status', methods=['GET'])
+def status():
+    global mining_process
+    miner_running = mining_process and mining_process.is_alive()
 
-    response = {
-        'message': "New Block Forged",
-        'index': block.index,
-        'transactions': [tx.__dict__ for tx in block.transactions],
-        'proof': block.nonce,
-        'previous_hash': block.previous_hash,
-    }
-    return jsonify(response), 200
+    try:
+        # Load keypair from file
+        with open("miner_keypair.json", "r") as f:
+            miner_keypair = Keypair.from_json(f.read())
+        miner_address = str(miner_keypair.pubkey())
 
+        # Replace with your RPC endpoint
+        http_client = Client("https://api.devnet.solana.com")
+        
+        # Get the associated token account address
+        from spl.token.instructions import get_associated_token_address
 
-@app.route('/transactions/new', methods=['POST'])
-def new_transaction():
-    values = request.get_json()
+        ata_address = get_associated_token_address(miner_keypair.pubkey(), TOKEN_MINT)
 
-    # Check that the required fields are in the POST'ed data
-    required = ['sender', 'recipient', 'amount', 'signature']
-    if not all(k in values for k in required):
-        return 'Missing values', 400
-
-    # Create a new Transaction
-    transaction = Transaction(sender=values['sender'], recipient=values['recipient'], amount=values['amount'], signature=bytes.fromhex(values['signature']))
-
-    if not Wallet.verify(transaction.sender, transaction.signature, transaction.to_bytes()):
-        return 'Invalid transaction signature', 400
-
-    blockchain.new_transaction(transaction)
-
-    response = {'message': f'Transaction will be added to Block {blockchain.last_block.index + 1}'}
-    return jsonify(response), 201
+        # Get balance
+        balance_response = http_client.get_token_account_balance(ata_address)
+        balance = balance_response.value.ui_amount_string
+    except Exception as e:
+        miner_address = "Unknown"
+        balance = f"Error fetching balance: {e}"
 
 
-@app.route('/chain', methods=['GET'])
-def full_chain():
-    response = {
-        'chain': [block.__dict__ for block in blockchain.chain],
-        'length': len(blockchain.chain),
-        'difficulty': blockchain.difficulty,
-    }
-    return jsonify(response), 200
-
-
-@app.route('/balance/<address>', methods=['GET'])
-def get_balance(address):
-    balance = blockchain.get_balance(address)
-    response = {
-        'address': address,
-        'balance': balance,
-    }
-    return jsonify(response), 200
-
-
-@app.route('/dqn_status', methods=['GET'])
-def dqn_status():
-    status = blockchain.validator.get_status() # Assuming DQNValidator has a get_status method
-    response = {
-        'status': status,
-    }
-    return jsonify(response), 200
-
+    return jsonify({
+        'miner_running': miner_running,
+        'miner_pid': mining_process.pid if miner_running else None,
+        'miner_address': miner_address,
+        'balance': balance
+    })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

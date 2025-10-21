@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/deps/libsecp256k1-5914ee703a0095b8.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libsecp256k1-0.6.0/src/lib.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const_gen.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/deps/liblibsecp256k1-5914ee703a0095b8.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libsecp256k1-0.6.0/src/lib.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const_gen.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/deps/liblibsecp256k1-5914ee703a0095b8.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libsecp256k1-0.6.0/src/lib.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const_gen.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libsecp256k1-0.6.0/src/lib.rs:
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const.rs:
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out/const_gen.rs:
+
+# env-dep:OUT_DIR=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_deadsgold_miner_program/target/debug/build/libsecp256k1-c8b1829ccafa921e/out

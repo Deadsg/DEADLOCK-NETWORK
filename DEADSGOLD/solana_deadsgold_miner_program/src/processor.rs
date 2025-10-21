@@ -9,11 +9,12 @@ use solana_program::{
     sysvar::{rent::Rent, Sysvar},
 };
 use spl_token::instruction as token_instruction;
+use sha3::{Digest, Keccak256};
 
 use crate::{
     error::DeadsgoldMinerError,
     instruction::DeadsgoldMinerInstruction,
-    state::{Config, MinerProof, CONFIG_SEED, MINER_PROOF_SEED, get_config_pda, get_miner_proof_pda, get_bus_pda},
+    state::{Config, MinerProof, CONFIG_SEED, MINER_PROOF_SEED, BUS_SEED, get_config_pda, get_miner_proof_pda, get_bus_pda},
 };
 use borsh::{BorshDeserialize, BorshSerialize};
 
@@ -33,9 +34,9 @@ pub fn process_instruction(
             msg!("Instruction: Open");
             open(program_id, accounts)
         }
-        DeadsgoldMinerInstruction::Mine { nonce, hash } => {
+        DeadsgoldMinerInstruction::Mine { nonce } => {
             msg!("Instruction: Mine");
-            mine(program_id, accounts, nonce, hash)
+            mine(program_id, accounts, nonce)
         }
         DeadsgoldMinerInstruction::Reset { challenge, difficulty } => {
             msg!("Instruction: Reset");
@@ -69,7 +70,7 @@ fn initialize(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
-    let (config_pda, config_bump) = get_config_pda();
+    let (config_pda, config_bump) = get_config_pda(program_id);
     if config_pda != *config_account.key {
         return Err(DeadsgoldMinerError::InvalidInstruction.into());
     }
@@ -131,7 +132,7 @@ fn open(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
-    let (miner_proof_pda, miner_proof_bump) = get_miner_proof_pda(miner_authority.key);
+    let (miner_proof_pda, miner_proof_bump) = get_miner_proof_pda(miner_authority.key, program_id);
     if miner_proof_pda != *miner_proof_account.key {
         return Err(DeadsgoldMinerError::InvalidInstruction.into());
     }
@@ -175,7 +176,6 @@ fn mine(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
     nonce: u64,
-    hash: [u8; 32],
 ) -> ProgramResult {
     let accounts_iter = &mut accounts.iter();
 
@@ -191,7 +191,7 @@ fn mine(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
-    let (miner_proof_pda, _) = get_miner_proof_pda(miner_authority.key);
+    let (miner_proof_pda, _) = get_miner_proof_pda(miner_authority.key, program_id);
     if miner_proof_pda != *miner_proof_account.key {
         return Err(DeadsgoldMinerError::InvalidInstruction.into());
     }
@@ -203,17 +203,13 @@ fn mine(
         return Err(DeadsgoldMinerError::InvalidTokenMint.into());
     }
 
-    // TODO: Implement actual hash verification logic here
-    // For now, a placeholder: check if hash matches a simple condition
-    let mut valid_hash = false;
-    let mut combined_hash_input = Vec::new();
-    combined_hash_input.extend_from_slice(&config_data.challenge);
-    combined_hash_input.extend_from_slice(&nonce.to_le_bytes());
-    let computed_hash = solana_program::keccak::hash(&combined_hash_input);
+    let mut hasher = Keccak256::new();
+    hasher.update(&config_data.challenge);
+    hasher.update(&nonce.to_le_bytes());
+    let computed_hash = hasher.finalize();
 
-    // Simple difficulty check: leading zeros
     let mut leading_zeros = 0;
-    for byte in computed_hash.as_ref().iter() {
+    for byte in computed_hash.as_slice().iter() {
         if *byte == 0 {
             leading_zeros += 8;
         } else {
@@ -222,16 +218,12 @@ fn mine(
         }
     }
 
-    if leading_zeros >= config_data.difficulty {
-        valid_hash = true;
-    }
-
-    if !valid_hash {
+    if u64::from(leading_zeros) < config_data.difficulty {
         return Err(DeadsgoldMinerError::ChallengeNotMet.into());
     }
 
     // Transfer rewards
-    let (bus_pda, bus_bump) = get_bus_pda(0); // Assuming bus 0 for now
+    let (bus_pda, bus_bump) = get_bus_pda(0, program_id); // Assuming bus 0 for now
     let authority_seeds = &[BUS_SEED, &0u64.to_le_bytes(), &[bus_bump]];
     let signer_seeds = &[&authority_seeds[..]];
 
@@ -277,7 +269,7 @@ fn reset(
         return Err(ProgramError::MissingRequiredSignature);
     }
 
-    let (config_pda, _) = get_config_pda();
+    let (config_pda, _) = get_config_pda(program_id);
     if config_pda != *config_account.key {
         return Err(DeadsgoldMinerError::InvalidInstruction.into());
     }
@@ -306,13 +298,13 @@ fn claim(
     let miner_token_account = next_account_info(accounts_iter)?;
     let bus_account = next_account_info(accounts_iter)?;
     let token_program = next_account_info(accounts_iter)?;
-    let token_mint_account = next_account_info(accounts_iter)?;
+    let _token_mint_account = next_account_info(accounts_iter)?;
 
     if !miner_authority.is_signer {
         return Err(ProgramError::MissingRequiredSignature);
     }
 
-    let (miner_proof_pda, _) = get_miner_proof_pda(miner_authority.key);
+    let (miner_proof_pda, _) = get_miner_proof_pda(miner_authority.key, program_id);
     if miner_proof_pda != *miner_proof_account.key {
         return Err(DeadsgoldMinerError::InvalidInstruction.into());
     }
@@ -324,7 +316,7 @@ fn claim(
         return Ok(());
     }
 
-    let (bus_pda, bus_bump) = get_bus_pda(0); // Assuming bus 0 for now
+    let (bus_pda, bus_bump) = get_bus_pda(0, program_id); // Assuming bus 0 for now
     let authority_seeds = &[BUS_SEED, &0u64.to_le_bytes(), &[bus_bump]];
     let signer_seeds = &[&authority_seeds[..]];
 

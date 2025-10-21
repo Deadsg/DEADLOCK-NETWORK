@@ -1,4 +1,4 @@
-use solana_program::{pubkey::Pubkey, program_error::ProgramError};
+use solana_program::{pubkey::Pubkey};
 use borsh::{BorshSerialize, BorshDeserialize};
 use bytemuck::{Pod, Zeroable};
 
@@ -60,16 +60,16 @@ pub const MINER_PROOF_SEED: &[u8] = b"miner_proof";
 pub const BUS_SEED: &[u8] = b"bus";
 
 // Helper to get PDA for config account
-pub fn get_config_pda() -> (Pubkey, u8) {
-    Pubkey::find_program_address(&[CONFIG_SEED], &crate::id())
+pub fn get_config_pda(program_id: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(&[CONFIG_SEED], program_id)
 }
 
 // Helper to get PDA for miner proof account
-pub fn get_miner_proof_pda(authority: &Pubkey) -> (Pubkey, u8) {
-    Pubkey::find_program_address(&[MINER_PROOF_SEED, authority.as_ref()], &crate::id())
+pub fn get_miner_proof_pda(authority: &Pubkey, program_id: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(&[MINER_PROOF_SEED, authority.as_ref()], program_id)
 }
 
 // Helper to get PDA for bus account
-pub fn get_bus_pda(bus_id: u64) -> (Pubkey, u8) {
-    Pubkey::find_program_address(&[BUS_SEED, &bus_id.to_le_bytes()], &crate::id())
+pub fn get_bus_pda(bus_id: u64, program_id: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(&[BUS_SEED, &bus_id.to_le_bytes()], program_id)
 }

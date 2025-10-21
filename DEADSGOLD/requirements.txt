@@ -1,6 +1,6 @@
 solders
 solana
-spl-token
 cryptography
 PySide6
 requests
+keccak

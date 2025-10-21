@@ -31,6 +31,8 @@ dependencies = [
     "decorator>=3.2.0",
     "Mako",
     "setuptools",
+    "keccak",
+    "pysha3",
 ]
 
 [project.urls]

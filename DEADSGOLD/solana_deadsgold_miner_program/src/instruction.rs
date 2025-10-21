@@ -34,7 +34,6 @@ pub enum DeadsgoldMinerInstruction {
     /// 6. `[]` Token mint account
     Mine {
         nonce: u64,
-        hash: [u8; 32],
     },
 
     /// Resets the mining challenge and difficulty.
@@ -73,8 +72,7 @@ impl DeadsgoldMinerInstruction {
             1 => Self::Open,
             2 => {
                 let nonce = u64::from_le_bytes(rest[0..8].try_into().unwrap());
-                let hash: [u8; 32] = rest[8..40].try_into().unwrap();
-                Self::Mine { nonce, hash }
+                Self::Mine { nonce }
             }
             3 => {
                 let challenge: [u8; 32] = rest[0..32].try_into().unwrap();
@@ -97,10 +95,9 @@ impl DeadsgoldMinerInstruction {
                 buf.extend_from_slice(token_mint);
             }
             Self::Open => buf.push(1),
-            Self::Mine { nonce, hash } => {
+            Self::Mine { nonce } => {
                 buf.push(2);
                 buf.extend_from_slice(&nonce.to_le_bytes());
-                buf.extend_from_slice(hash);
             }
             Self::Reset { challenge, difficulty } => {
                 buf.push(3);

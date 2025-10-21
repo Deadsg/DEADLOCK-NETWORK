@@ -7,7 +7,7 @@ async function main() {
     console.log('Starting metadata creation script...');
 
     // 1. Initialize Umi with Solana devnet connection
-    const umi = createUmi('https://api.devnet.solana.com');
+    const umi = createUmi('https://api.mainnet-beta.solana.com');
     umi.use(mplTokenMetadata());
 
     // 2. Load your keypair

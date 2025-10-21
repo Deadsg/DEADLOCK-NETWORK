@@ -4,7 +4,7 @@ pub mod state;
 pub mod processor;
 
 use solana_program::{
-    account_info::{next_account_info, AccountInfo},
+    account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
     msg,
@@ -25,4 +25,4 @@ pub fn process_instruction(
 }
 
 // Define the program ID for easier access
-solana_program::declare_id!("DEADSGOLDMinerProgram111111111111111111111111111");
+solana_program::declare_id!("8KWTy2J2ygMFoht4KbL2UNbAkYnt8rPsSW96TrUdxcda");
