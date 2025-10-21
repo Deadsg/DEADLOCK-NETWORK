@@ -1,20 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { Container, Typography, Paper, Button, TextField, Box, IconButton, InputAdornment, Alert } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-const WalletPage: React.FC = () => {
+export interface WalletPageRef {
+  fetchBalance: () => void;
+}
+
+const WalletPage = forwardRef<WalletPageRef, {}>((props, ref) => {
   const [publicKey, setPublicKey] = useState<string | null>(null);
   const [privateKey, setPrivateKey] = useState<string | null>(null);
   const [showPrivateKey, setShowPrivateKey] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
 
   // Transaction state
   const [recipient, setRecipient] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
   const [senderPrivateKey, setSenderPrivateKey] = useState<string>('');
   const [showSenderPrivateKey, setShowSenderPrivateKey] = useState<boolean>(false);
+
+  const fetchBalance = async () => {
+    if (!publicKey) return;
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/wallet/balance/${publicKey}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setBalance(data.balance);
+    } catch (e: any) {
+      console.error("Failed to fetch balance:", e);
+      setError("Failed to fetch balance.");
+      setBalance(null);
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    fetchBalance,
+  }));
+
+  useEffect(() => {
+    fetchBalance();
+  }, [publicKey]);
 
   const handleGenerateWallet = async () => {
     try {
@@ -102,6 +131,11 @@ const WalletPage: React.FC = () => {
         {publicKey && privateKey && (
           <Box sx={{ mt: 3 }}>
             <Typography variant="h6">Your New Wallet:</Typography>
+            {balance !== null && (
+              <Typography variant="subtitle1" sx={{ mt: 1 }}>
+                Current Balance: {balance} DEAD
+              </Typography>
+            )}
             <TextField
               label="Public Key (Address)"
               fullWidth

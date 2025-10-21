@@ -54,7 +54,14 @@ class Wallet:
     @classmethod
     def from_private_key_hex(cls, private_key_hex: str):
         private_key_bytes = bytes.fromhex(private_key_hex)
-        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
+        if len(private_key_bytes) == 64: # Assuming Solana-compatible 64-byte private key
+            # Extract the 32-byte seed from the 64-byte private key
+            seed = private_key_bytes[:32]
+            private_key = ed25519.Ed25519PrivateKey.from_private_bytes(seed)
+        elif len(private_key_bytes) == 32: # Original 32-byte seed
+            private_key = ed25519.Ed25519PrivateKey.from_private_bytes(private_key_bytes)
+        else:
+            raise ValueError("Invalid private key length. Expected 32 or 64 bytes.")
         return cls(private_key=private_key)
 
     @classmethod
@@ -118,15 +125,18 @@ class Wallet:
     @property
     def private_key_hex(self) -> str:
         """
-        Returns the wallet's private key serialized as PEM and then hex-encoded.
+        Returns the wallet's private key as a 64-byte hexadecimal string (Solana-compatible).
         """
         if not self._private_key:
             raise ValueError("Private key not loaded or decrypted.")
-        return self._private_key.private_bytes(
+        
+        # Create a solders.keypair.Keypair from the ed25519 private key seed
+        solana_keypair = Keypair.from_seed(self._private_key.private_bytes(
             encoding=serialization.Encoding.Raw,
             format=serialization.PrivateFormat.Raw,
             encryption_algorithm=serialization.NoEncryption()
-        ).hex()
+        ))
+        return solana_keypair.secret().hex()
 
     def sign(self, data: bytes) -> bytes:
         """

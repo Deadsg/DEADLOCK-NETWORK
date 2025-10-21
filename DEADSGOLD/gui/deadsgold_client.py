@@ -33,9 +33,23 @@ class DeadsgoldClient:
             return response.json()['balance']
         return None
 
+    def get_private_key_hex(self):
+        try:
+            return self.wallet.private_key_hex
+        except ValueError:
+            return "Private key not loaded or decrypted."
+
     def create_new_wallet(self):
         self.wallet = Wallet()
-        return self.wallet.public_key
+        return self.wallet.address, self.wallet.private_key_hex
+
+    def load_wallet_from_private_key(self, private_key_hex: str):
+        try:
+            self.wallet = Wallet.from_private_key_hex(private_key_hex)
+            return True
+        except Exception as e:
+            print(f"Error loading wallet from private key: {e}")
+            return False
 
     def send_transaction(self, recipient, amount):
         transaction = self.wallet.create_transaction(recipient, amount)
