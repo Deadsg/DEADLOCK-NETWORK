@@ -1,12 +1,60 @@
-# Deadsgold Network Project Structure
+# DEADSGOLD - Solana Token & Network Components
 
-This document outlines the directory structure and the likely purpose of the main components within the Deadsgold Network project, based on an analysis of the file system.
+This document outlines the directory structure and the purpose of the main components within the DEADSGOLD project, focusing on its role within the broader DEADLOCK-NETWORK, especially its Solana token integration and management.
 
 ## Project Root (`/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/`)
 
-*   `README.md`: This file, providing an overview of the project structure.
+*   `README.md`: This file, providing an overview of the project structure and token management.
 *   `requirements.txt`: Lists Python dependencies required for the project.
 *   `run_gui.bat`: A Windows batch script, likely used to launch the graphical user interface.
+*   `token_metadata.json`: The local JSON file containing the token's metadata (name, symbol, description, image).
+
+## Solana Token Details
+
+*   **Token Name:** DEADSGOLD
+*   **Token Symbol:** DEAD
+*   **Token Mint Address:** `HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj`
+*   **Decimals:** 9
+
+## Token Metadata Management
+
+Managing your token's on-chain metadata is crucial for its discoverability and proper display in wallets and explorers. This project includes scripts to facilitate this process.
+
+### 1. Metadata JSON & IPFS Hosting
+
+Your token's metadata (name, symbol, description, image URL) is defined in a JSON file. For permanence and decentralization, this JSON file, along with your token's logo image, should be hosted on a decentralized storage solution like IPFS.
+
+*   **`token_metadata.json`:** This file (located in the project root) contains the structured metadata for your token.
+*   **IPFS Hosting:** Upload your `token_metadata.json` file and your token's logo image to a public IPFS pinning service (e.g., Pinata, Web3.storage). Obtain the Content Identifier (CID) for your hosted `token_metadata.json` file.
+
+### 2. Updating On-Chain Metadata
+
+The `token-metadata-script/update-metadata.ts` script is used to update your token's `tokenUri` on the Solana blockchain to point to your publicly hosted `token_metadata.json` file.
+
+**Prerequisites:**
+*   Node.js and npm installed.
+*   `ts-node` and `typescript` installed globally (`npm install -g ts-node typescript`) or locally (`npm install`).
+*   Your Solana keypair file (`/home/deadsg/.config/solana/new-dev-wallet.json` or your custom path) must be accessible and contain SOL for transaction fees.
+
+**Usage:**
+1.  **Navigate:** `cd DEADSGOLD/token-metadata-script/`
+2.  **Install Dependencies:** `npm install`
+3.  **Configure:** Ensure `update-metadata.ts` has the correct `keypairPath` and the `umi` connection URL (e.g., `https://api.mainnet-beta.solana.com`). The `newTokenUri` should be set to your IPFS link.
+4.  **Run Script:** `npx ts-node update-metadata.ts`
+
+This script fetches the existing metadata, updates the `uri` field, and sends a transaction to the Solana blockchain.
+
+## Solana Token List Submission
+
+To get your token recognized by major wallets and applications, you should submit it to the official [solana-token-list GitHub repository](https://github.com/solana-labs/token-list).
+
+**Steps:**
+1.  **Fork & Clone:** Fork the `solana-token-list` repository and clone your fork locally.
+2.  **Create Directory:** Inside your cloned fork, create `assets/mainnet/HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj/`.
+3.  **Add `token.json`:** Place your `token.json` file (generated in this project's root) into this new directory.
+4.  **Add Logo:** Place your token's logo image (e.g., `logo.png`, `logo.svg`) in the same directory.
+5.  **Update `logoURI`:** Ensure the `logoURI` in your `token.json` points to the IPFS link of your logo image.
+6.  **Commit & PR:** Commit your changes to a new branch, push to your fork, and create a Pull Request to the main `solana-token-list` repository.
 
 ## Core Modules
 
@@ -84,6 +132,7 @@ This directory appears to be a more comprehensive and detailed implementation of
 
 ### `miner/`
 
+*   `main.py`: The main script for the graphical user interface.
 *   `__init__.py`: Marks the directory as a Python package.
 *   `miner.py`: Implements the logic for the blockchain miner.
 
