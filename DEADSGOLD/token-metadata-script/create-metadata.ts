@@ -26,7 +26,7 @@ async function main() {
     // 3. Define token details
     const mintAddress = publicKey('HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj'); // Your token's mint address
     const tokenName = 'DEADSGOLD';
-    const tokenSymbol = 'DEAD';
+    const tokenSymbol = 'DEDG';
     const tokenUri = 'https://example.com/deadsgold-metadata.json'; // Placeholder URI - UPDATE THIS LATER!
     console.log(`Token Mint Address: ${mintAddress}`);
     console.log(`Token Name: ${tokenName}`);
