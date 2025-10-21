@@ -1,33 +1,37 @@
+import requests
 import threading
 import time
-from DEADSGOLD.blockchain.chain import Blockchain
 from DEADSGOLD.wallet.wallet import Wallet
-from DEADSGOLD.dqn.validator import DQNValidator
-from DEADSGOLD.miner.miner import Miner
 from DEADSGOLD.blockchain.transaction import Transaction
 
 class DeadsgoldClient:
-    def __init__(self):
-        self.blockchain = Blockchain()
+    def __init__(self, api_url="http://127.0.0.1:5000"):
+        self.api_url = api_url
         self.wallet = Wallet()
-        self.miner = Miner(self.blockchain)
-        self.dqn_validator = DQNValidator() # Assuming DQNValidator is initialized here
         self.is_mining = False
         self.mining_thread = None
         self.mining_callback = None
 
     def get_blockchain_status(self):
-        return {
-            "block_height": len(self.blockchain.chain),
-            "last_block_hash": self.blockchain.last_block.hash,
-            "difficulty": self.blockchain.difficulty,
-        }
+        response = requests.get(f"{self.api_url}/chain")
+        if response.status_code == 200:
+            chain_data = response.json()
+            return {
+                "block_height": chain_data['length'],
+                "last_block_hash": chain_data['chain'][-1]['hash'],
+                "difficulty": chain_data['difficulty'], # Assuming API returns difficulty
+            }
+        return None
 
     def get_wallet_address(self):
-        return self.wallet.public_key
+        return self.wallet.address
 
     def get_wallet_balance(self):
-        return self.blockchain.get_balance(self.wallet.public_key)
+        address = self.get_wallet_address()
+        response = requests.get(f"{self.api_url}/balance/{address}")
+        if response.status_code == 200:
+            return response.json()['balance']
+        return None
 
     def create_new_wallet(self):
         self.wallet = Wallet()
@@ -35,9 +39,14 @@ class DeadsgoldClient:
 
     def send_transaction(self, recipient, amount):
         transaction = self.wallet.create_transaction(recipient, amount)
-        if self.blockchain.new_transaction(transaction):
-            return True
-        return False
+        payload = {
+            "sender": transaction.sender,
+            "recipient": transaction.recipient,
+            "amount": transaction.amount,
+            "signature": transaction.signature.hex() if transaction.signature else None # Assuming signature is bytes
+        }
+        response = requests.post(f"{self.api_url}/transactions/new", json=payload)
+        return response.status_code == 201
 
     def start_mining(self, callback=None):
         if not self.is_mining:
@@ -59,31 +68,23 @@ class DeadsgoldClient:
 
     def _mining_loop(self):
         while self.is_mining:
-            last_block = self.blockchain.last_block
-            pending_transactions = self.blockchain.pending_transactions.copy()
-            difficulty = self.blockchain.difficulty
-
-            # Add a reward transaction for the miner
-            reward_transaction = Transaction("0", self.wallet.address, 1.0) # Assuming 1.0 unit reward
-            pending_transactions.append(reward_transaction)
-
-            print(f"Miner: Starting to mine block {last_block.index + 1}...")
-            proof = self.miner.mine(last_block, pending_transactions, difficulty)
-
-            if proof is not None:
-                new_block = self.blockchain.new_block(proof)
-                print(f"Miner: New block {new_block.index} mined: {new_block.hash}")
+            print("Miner: Requesting to mine a new block via API...")
+            response = requests.get(f"{self.api_url}/mine")
+            if response.status_code == 200:
+                mining_data = response.json()
+                print(f"Miner: New block {mining_data['index']} mined: {mining_data['previous_hash']}")
                 if self.mining_callback:
-                    self.mining_callback(new_block.index, new_block.hash, difficulty)
+                    # We need to get the difficulty from the blockchain status
+                    blockchain_status = self.get_blockchain_status()
+                    difficulty = blockchain_status['difficulty'] if blockchain_status else None
+                    self.mining_callback(mining_data['index'], mining_data['previous_hash'], difficulty)
             else:
-                print("Miner: No proof found (should not happen in current implementation)")
+                print(f"Miner: Failed to mine block. Status code: {response.status_code}, Response: {response.text}")
 
             time.sleep(0.1) # Small delay to prevent busy-waiting
 
     def get_dqn_status(self):
-        # Placeholder for DQN status
-        return {
-            "status": "Active",
-            "last_decision": "Transaction validated",
-            "model_version": "1.0",
-        }
+        response = requests.get(f"{self.api_url}/dqn_status")
+        if response.status_code == 200:
+            return response.json()['status']
+        return None

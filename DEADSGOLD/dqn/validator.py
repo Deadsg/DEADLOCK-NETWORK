@@ -45,3 +45,11 @@ class DQNValidator:
         action = np.argmax(q_values)
 
         return action == 1 # Assume action 1 is approve
+
+    def get_status(self):
+        return {
+            "status": "Active",
+            "model_path": self.session.get_modelmeta().graph_name,
+            "input_name": self.input_name,
+            "output_name": self.output_name,
+        }

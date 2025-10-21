@@ -1,0 +1,16 @@
+[package]
+name = "deadsgold-miner"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+no-entrypoint = []
+
+[dependencies]
+solana-program = "1.18.1"
+borsh = "0.10.3"
+thiserror = "1.0.50"
+bytemuck = { version = "1.14.0", features = ["derive"] }

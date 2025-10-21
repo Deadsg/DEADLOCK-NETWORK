@@ -1,7 +1,7 @@
 
 import hashlib
 import json
-from time import time
+import time
 import multiprocessing
 
 from DEADSGOLD.blockchain.block import Block
@@ -44,7 +44,7 @@ class Miner:
         # Prepare data for workers (serialize objects)
         block_index = last_block.index + 1
         block_previous_hash = last_block.hash
-        block_timestamp = time()
+        block_timestamp = time.time()
         pending_transactions_data = [tx.to_dict() for tx in pending_transactions]
 
         # Divide the nonce search space
@@ -82,12 +82,12 @@ class Miner:
         pool.terminate()
         pool.join()
         print(f"Mining complete. Found nonce: {found_nonce.value}")
-        return found_nonce.value
+        return found_nonce.value, block_timestamp
 
-    def valid_proof_hash(self, last_block, pending_transactions, nonce, difficulty) -> bool:
+    def valid_proof_hash(self, last_block, pending_transactions, nonce, difficulty, timestamp) -> bool:
         block_data = {
             "index": last_block.index + 1,
-            "timestamp": time(),
+            "timestamp": timestamp,
             "transactions": [tx.to_dict() for tx in pending_transactions],
             "previous_hash": last_block.hash,
             "nonce": nonce,
