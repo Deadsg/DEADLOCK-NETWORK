@@ -167,6 +167,35 @@ pub struct MineArgs {
 }
 
 #[derive(Parser, Debug)]
+pub struct DeadsgoldMineArgs {
+    #[arg(
+        long,
+        short,
+        value_name = "CORES_COUNT",
+        help = "The number of CPU cores to allocate to mining.",
+        default_value = "1"
+    )]
+    pub cores: String,
+
+    #[arg(
+        long,
+        short,
+        value_name = "BUFFER_TIME",
+        help = "The number seconds before the deadline to stop mining and start submitting.",
+        default_value = "5"
+    )]
+    pub buffer_time: u64,
+
+    #[arg(
+        long,
+        short,
+        help = "Flag indicating whether or not to run in verbose mode.",
+        default_value = "false"
+    )]
+    pub verbose: bool,
+}
+
+#[derive(Parser, Debug)]
 pub struct PoolArgs {
     #[arg(value_name = "POOL_URL", help = "The pool url to connect to.")]
     pub pool_url: Option<String>,

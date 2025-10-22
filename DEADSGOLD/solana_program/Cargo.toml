@@ -8,3 +8,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 solana-program = "1.17.14"
+borsh = "0.10.3"
+sha2 = "0.10.6"

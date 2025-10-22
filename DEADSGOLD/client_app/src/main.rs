@@ -17,6 +17,9 @@ use solana_sdk::{
     signature::{read_keypair_file, Keypair},
 };
 use utils::{PoolMiningData, SoloMiningData, Tip};
+use solana_program::pubkey::Pubkey;
+
+const DEADSGOLD_PROGRAM_ID: &str = "4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka";
 
 // TODO: Unify balance and proof into "account"
 // TODO: Move balance subcommands to "pool"
@@ -52,9 +55,6 @@ enum Commands {
     #[command(about = "Initialize the program")]
     Initialize(InitializeArgs),
 
-    #[command(about = "Start mining on your local machine")]
-    Mine(MineArgs),
-
     #[command(about = "Connect to a mining pool")]
     Pool(PoolArgs),
 
@@ -69,6 +69,9 @@ enum Commands {
 
     #[command(about = "Send ORE to another user")]
     Transfer(TransferArgs),
+
+    #[command(about = "Start mining for Deadsgold token")]
+    DeadsgoldMine(DeadsgoldMineArgs),
 }
 
 #[derive(Parser, Debug)]
@@ -219,11 +222,6 @@ async fn main() {
         Commands::Program(_) => {
             miner.program().await;
         }
-        Commands::Mine(args) => {
-            if let Err(err) = miner.mine(args).await {
-                println!("{:?}", err);
-            }
-        }
         Commands::Stake(args) => {
             miner.stake(args).await;
         }
@@ -236,6 +234,9 @@ async fn main() {
         #[cfg(feature = "admin")]
         Commands::Initialize(_) => {
             miner.initialize().await;
+        }
+        Commands::DeadsgoldMine(args) => {
+            miner.deadsgold_mine(args).await;
         }
     }
 }
