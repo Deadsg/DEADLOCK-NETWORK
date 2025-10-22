@@ -8,7 +8,7 @@ version = "0.1.0"
 authors = [
   { name="Andreas Kloeckner", email="inform@tiker.net" },
 ]
-description = "A project that uses pycuda."
+description = "A DEADSGOLD blockchain project."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT License" }
@@ -27,13 +27,10 @@ dependencies = [
     "solana",
     "anchorpy",
     "numpy",
-    "pytools>=2011.2",
-    "decorator>=3.2.0",
-    "Mako",
-    "setuptools",
-    "keccak",
-    "pysha3",
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/DEADLOCK-NETWORK/DEADSGOLD"
+
+[tool.setuptools]
+packages = ["api", "blockchain", "dqn", "gui", "miner", "node", "wallet", "backend", "DQNAgent"]

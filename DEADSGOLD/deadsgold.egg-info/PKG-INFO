@@ -1,0 +1,187 @@
+Metadata-Version: 2.4
+Name: deadsgold
+Version: 0.1.0
+Summary: A DEADSGOLD blockchain project.
+Author-email: Andreas Kloeckner <inform@tiker.net>
+License: MIT License
+Project-URL: Homepage, https://github.com/DEADLOCK-NETWORK/DEADSGOLD
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Software Development
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: cryptography
+Requires-Dist: onnxruntime
+Requires-Dist: solana
+Requires-Dist: anchorpy
+Requires-Dist: numpy
+
+# DEADSGOLD - Solana Token & Network Components
+
+This document outlines the directory structure and the purpose of the main components within the DEADSGOLD project, focusing on its role within the broader DEADLOCK-NETWORK, especially its Solana token integration and management.
+
+## Project Root (`/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/`)
+
+*   `README.md`: This file, providing an overview of the project structure and token management.
+*   `requirements.txt`: Lists Python dependencies required for the project.
+*   `run_gui.bat`: A Windows batch script, likely used to launch the graphical user interface.
+*   `token_metadata.json`: The local JSON file containing the token's metadata (name, symbol, description, image).
+
+## Solana Token Details
+
+*   **Token Name:** DEADSGOLD
+*   **Token Symbol:** DEAD
+*   **Token Mint Address:** `HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj`
+*   **Decimals:** 9
+
+## Token Metadata Management
+
+Managing your token's on-chain metadata is crucial for its discoverability and proper display in wallets and explorers. This project includes scripts to facilitate this process.
+
+### 1. Metadata JSON & IPFS Hosting
+
+Your token's metadata (name, symbol, description, image URL) is defined in a JSON file. For permanence and decentralization, this JSON file, along with your token's logo image, should be hosted on a decentralized storage solution like IPFS.
+
+*   **`token_metadata.json`:** This file (located in the project root) contains the structured metadata for your token.
+*   **IPFS Hosting:** Upload your `token_metadata.json` file and your token's logo image to a public IPFS pinning service (e.g., Pinata, Web3.storage). Obtain the Content Identifier (CID) for your hosted `token_metadata.json` file.
+
+### 2. Updating On-Chain Metadata
+
+The `token-metadata-script/update-metadata.ts` script is used to update your token's `tokenUri` on the Solana blockchain to point to your publicly hosted `token_metadata.json` file.
+
+**Prerequisites:**
+*   Node.js and npm installed.
+*   `ts-node` and `typescript` installed globally (`npm install -g ts-node typescript`) or locally (`npm install`).
+*   Your Solana keypair file (`/home/deadsg/.config/solana/new-dev-wallet.json` or your custom path) must be accessible and contain SOL for transaction fees.
+
+**Usage:**
+1.  **Navigate:** `cd DEADSGOLD/token-metadata-script/`
+2.  **Install Dependencies:** `npm install`
+3.  **Configure:** Ensure `update-metadata.ts` has the correct `keypairPath` and the `umi` connection URL (e.g., `https://api.mainnet-beta.solana.com`). The `newTokenUri` should be set to your IPFS link.
+4.  **Run Script:** `npx ts-node update-metadata.ts`
+
+This script fetches the existing metadata, updates the `uri` field, and sends a transaction to the Solana blockchain.
+
+## Solana Token List Submission
+
+To get your token recognized by major wallets and applications, you should submit it to the official [solana-token-list GitHub repository](https://github.com/solana-labs/token-list).
+
+**Steps:**
+1.  **Fork & Clone:** Fork the `solana-token-list` repository and clone your fork locally.
+2.  **Create Directory:** Inside your cloned fork, create `assets/mainnet/HPUj1r6RLnWuP63a6H2D2DgEGfUAL3Bw9woC7xBt3kLj/`.
+3.  **Add `token.json`:** Place your `token.json` file (generated in this project's root) into this new directory.
+4.  **Add Logo:** Place your token's logo image (e.g., `logo.png`, `logo.svg`) in the same directory.
+5.  **Update `logoURI`:** Ensure the `logoURI` in your `token.json` points to the IPFS link of your logo image.
+6.  **Commit & PR:** Commit your changes to a new branch, push to your fork, and create a Pull Request to the main `solana-token-list` repository.
+
+## Core Modules
+
+### `api/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `main.py`: Likely contains the main entry point for the project's API server, handling requests and responses.
+
+### `blockchain/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `block.py`: Defines the structure and behavior of individual blocks in the blockchain.
+*   `chain.py`: Manages the blockchain itself, including adding blocks, validation, and consensus mechanisms.
+*   `transaction.py`: Defines the structure and handling of transactions within the blockchain.
+*   `__pycache__/`: Contains compiled Python bytecode files.
+
+### `dqn/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `agent.py`: Implements the core logic of a Deep Q-Network (DQN) agent.
+*   `validator.py`: Potentially validates the actions or states related to the DQN agent or its environment.
+*   `__pycache__/`: Contains compiled Python bytecode files.
+
+### `DQNAgent/`
+
+This directory appears to be a more comprehensive and detailed implementation of the DQN agent, possibly a separate sub-project or a more advanced version.
+
+*   `.gitignore`: Specifies files and directories to be ignored by Git.
+*   `DQNAgent.pyproj`, `DQNAgent.sln`: Project and solution files, suggesting a Visual Studio or similar IDE project setup.
+*   `Q_Loop_Agent.py`, `Q_Loop_system.py`, `Q_Network_Phi-2.py`: Specific implementations or variations of Q-learning agents and network architectures.
+*   `README.md`: A README specific to the DQNAgent sub-project.
+*   `setup.py`: Used for packaging and distributing the DQNAgent module.
+*   `.git/`: Git version control repository data.
+*   `.github/workflows/`: GitHub Actions CI/CD workflows for Python applications.
+
+#### `DQNAgent/DQNAgent/` (Inner Module)
+
+*   `decisionmakingmodule.py`: Handles the agent's decision-making process.
+*   `DQN_Bot.py`: Likely an executable bot leveraging the DQN agent.
+*   `DQNAgent.py`: Core DQN agent implementation.
+*   `integrationmodule.py`: Manages integration with other parts of the system.
+*   `learningmodule.py`: Contains the learning algorithms for the DQN agent.
+*   `lpmodule.py`: (Purpose unclear without content, possibly related to linear programming or specific learning paradigms).
+*   `perceptionmodule.py`: Defines how the agent perceives its environment.
+*   `QLAgent.py`: Another Q-learning agent implementation.
+*   `QNetwork.py`: Defines the neural network architecture for the Q-function.
+*   `reasoningmodule.py`: Handles the agent's reasoning capabilities.
+*   `rlmodule.py`: Reinforcement learning utilities.
+*   `__pycache__/`: Compiled Python bytecode files.
+
+#### `DQNAgent/Q_Layered_Network/`
+
+*   `dqn_llm_logs.log`, `mistral_dqn_logs.log`: Log files, possibly from training or running DQN models with LLMs.
+*   `DQN_LLM_Test_Data.py`, `DQN_LLM.py`: Suggests integration of DQN with Large Language Models (LLMs).
+*   `DQN_Node_Agent.py`: A DQN agent specifically designed for node operations.
+*   `dqn_node_model.onnx`: An ONNX format model file, likely a pre-trained DQN model for node agents.
+*   `DQN_TRANS_LOADER.py`: Likely handles loading and transforming data for DQN training.
+*   `Layered_DQN.py`: Implements a layered DQN architecture.
+*   `Reasoning_.py`: Further reasoning logic.
+*   `requirements.txt`: Dependencies specific to this layered network.
+*   `training_data/`: Contains data and scripts (`Agent_Trainer.py`, `test_data.json`, `training_data.json`) for training these advanced DQN models.
+
+#### `DQNAgent/ref/`
+
+*   Contains PDF research papers, likely references for the DQN and AI implementations.
+
+#### `DQNAgent/src/`
+
+*   A source directory, mirroring some of the files in `DQNAgent/DQNAgent/` and `DQNAgent/Q_Layered_Network/`, possibly for a cleaner project structure or deployment.
+
+### `gui/`
+
+*   `main.py`: The main script for the graphical user interface.
+*   `.venv/`: A Python virtual environment for the GUI, containing its specific dependencies.
+
+### `miner/`
+
+*   `main.py`: The main script for the graphical user interface.
+*   `__init__.py`: Marks the directory as a Python package.
+*   `miner.py`: Implements the logic for the blockchain miner.
+
+### `node/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `node.py`: Implements the logic for a blockchain network node.
+
+### `solana_integration/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `client.py`: Contains code for interacting with the Solana blockchain (e.g., sending transactions, querying data).
+*   `__pycache__/`: Compiled Python bytecode files.
+
+### `solana_program_example/`
+
+*   `Anchor.toml`: Configuration file for Anchor, a framework for Solana smart contracts.
+*   `programs/hello_world/src/lib.rs`: An example Solana smart contract written in Rust.
+
+### `tests/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `test_blockchain.py`: Contains unit or integration tests for the blockchain components.
+*   `__pycache__/`: Compiled Python bytecode files.
+
+### `wallet/`
+
+*   `__init__.py`: Marks the directory as a Python package.
+*   `wallet.py`: Implements the logic for managing user wallets, including key generation and transaction signing.
+*   `__pycache__/`: Compiled Python bytecode files.
