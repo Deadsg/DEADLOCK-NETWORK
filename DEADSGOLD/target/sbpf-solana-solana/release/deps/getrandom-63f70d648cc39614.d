@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/libgetrandom-63f70d648cc39614.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/custom.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error_impls.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/libgetrandom-63f70d648cc39614.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/custom.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error_impls.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/getrandom-63f70d648cc39614.d: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/custom.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error_impls.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/util.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/custom.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.2.16/src/error_impls.rs:

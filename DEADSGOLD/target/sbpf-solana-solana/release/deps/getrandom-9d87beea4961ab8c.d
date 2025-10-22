@@ -1,0 +1,14 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/libgetrandom-9d87beea4961ab8c.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/backends.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error_std_impls.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/../README.md
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/libgetrandom-9d87beea4961ab8c.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/backends.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error_std_impls.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/../README.md
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/deps/getrandom-9d87beea4961ab8c.d: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/backends.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/util.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error_std_impls.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/../README.md
+
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/backends.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/util.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/error_std_impls.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/getrandom-0.3.4/src/../README.md:
+
+# env-dep:CARGO_PKG_VERSION=0.3.4
