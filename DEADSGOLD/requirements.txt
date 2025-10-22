@@ -1,6 +1,0 @@
-solders
-solana
-cryptography
-PySide6
-requests
-keccak

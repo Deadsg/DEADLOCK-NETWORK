@@ -1,0 +1,13 @@
+Creating token BtyvvfnFiC599j5gcswiE13JDUGpySKZJ81BSd3cmzQG under program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+
+Address:  TA: BtyvvfnFiC599j5gcswiE13JDUGpySKZJ81BSd3cmzQG
+Decimals:  9
+
+Signature: 3LjDxBZHapsoCMrFk7TRu4cBwJsnx7o6iR55TPK9866RG3zKgRFDjg3ZWpgtYsgw6Y5EaoH65FgYHUM1dmvm9tfR
+
+PK: [155,7,113,185,98,138,6,0,195,116,62,127,42,41,120,2,161,32,35,71,123,179,236,37,35,78,67,64,203,52,141,224,251,84,106,205,212,53,39,212,7,36,116,144,33,248,201,240,188,135,115,1,116,98,210,198,195,198,102,59,133,60,122,25]
+
+WA: Hv5zVCQodjdXFBW3mZoMvxH2gCC79AutRdw7S4qWgnor
+
+token account: Ed6PgnZDt9U6Mow4CMeQewswJ87cyRZhvnfCQRT259cM
+ this ll necessary info to generate coin miner
