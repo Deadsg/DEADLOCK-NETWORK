@@ -3,10 +3,10 @@ import hashlib
 import json
 from time import time
 
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.miner.miner import Miner
+from blockchain.block import Block
+from blockchain.chain import Blockchain
+from blockchain.transaction import Transaction
+from miner.miner import Miner
 
 @pytest.fixture
 def sample_blockchain():

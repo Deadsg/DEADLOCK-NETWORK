@@ -1,10 +1,10 @@
 from uuid import uuid4
 from flask import Flask, jsonify, request
 
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.wallet.wallet import Wallet
+from blockchain.chain import Blockchain
+from blockchain.block import Block
+from blockchain.transaction import Transaction
+from wallet.wallet import Wallet
 
 # Instantiate the Node
 app = Flask(__name__)

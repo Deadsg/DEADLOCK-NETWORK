@@ -5,14 +5,14 @@ import sys
 import os
 
 # Add the project root to sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit, QTextEdit, QGroupBox
 )
 from PySide6.QtCore import QTimer, Signal, QObject
 
-from DEADSGOLD.gui.deadsgold_client import DeadsgoldClient
+from gui.deadsgold_client import DeadsgoldClient
 
 class WorkerSignals(QObject):
     mining_update = Signal(int, str, int)

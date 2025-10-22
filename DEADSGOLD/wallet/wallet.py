@@ -163,7 +163,7 @@ class Wallet:
         """
         Creates and signs a new transaction.
         """
-        from DEADSGOLD.blockchain.transaction import Transaction # Import here to avoid circular dependency
+        from blockchain.transaction import Transaction # Import here to avoid circular dependency
         transaction = Transaction(sender=self.address, recipient=recipient, amount=amount)
         transaction.signature = self.sign(transaction.to_bytes())
         return transaction

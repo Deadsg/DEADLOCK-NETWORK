@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushB
 from PySide6.QtGui import QColor, QPalette
 from PySide6.QtCore import Qt, QTimer
 
-from DEADSGOLD.gui.deadsgold_client import DeadsgoldClient
+from gui.deadsgold_client import DeadsgoldClient
 
 class MainWindow(QWidget):
     def __init__(self):

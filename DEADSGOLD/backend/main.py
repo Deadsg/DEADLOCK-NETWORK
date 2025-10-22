@@ -8,9 +8,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.wallet.wallet import Wallet
+from blockchain.chain import Blockchain
+from blockchain.transaction import Transaction
+from wallet.wallet import Wallet
+from dqn.validator import DQNValidator # New import
 
 app = FastAPI()
 
@@ -28,6 +29,11 @@ app.add_middleware(
 
 # Instantiate the blockchain
 blockchain = Blockchain()
+dqn_validator = DQNValidator()
+
+# Create a wallet for the miner in the backend
+miner_wallet = Wallet() # New: Miner's wallet
+miner_address = miner_wallet.address # New: Miner's address
 
 class TransactionRequest(BaseModel):
     sender: str
@@ -44,7 +50,8 @@ async def get_blockchain_status():
     return {
         "chain_length": len(blockchain.chain),
         "last_block": blockchain.last_block.to_dict(),
-        "pending_transactions": [tx.to_dict() for tx in blockchain.pending_transactions]
+        "pending_transactions": [tx.to_dict() for tx in blockchain.pending_transactions],
+        "difficulty": blockchain.difficulty
     }
 
 @app.get("/wallet/{address}/balance")
@@ -62,6 +69,10 @@ async def new_transaction(tx_request: TransactionRequest):
     transaction = Transaction(tx_request.sender, tx_request.recipient, tx_request.amount)
     transaction.sign_transaction(wallet)
 
+    # Validate transaction with DQN
+    if not dqn_validator.validate_transaction(transaction):
+        raise HTTPException(status_code=400, detail="Transaction rejected by DQN validator")
+
     if blockchain.new_transaction(transaction):
         return {"message": "Transaction added to pending transactions"}
     else:
@@ -74,10 +85,10 @@ async def mine_block():
 
     # Reward the miner
     miner_address = "DEADSGOLD_MINER_ADDRESS" # Placeholder for a persistent miner address
-    reward_transaction = Transaction("0", miner_address, 1) # Reward of 1 coin
+    reward_transaction = Transaction("0", miner_address, 1)
     blockchain.new_transaction(reward_transaction)
 
-    block = blockchain.mine()
+    block = blockchain.mine_local()
     return {
         "message": "New Block Forged",
         "index": block.index,
@@ -90,3 +101,7 @@ async def mine_block():
 async def create_new_wallet():
     wallet = Wallet()
     return {"public_key": wallet.address, "private_key": wallet.private_key_hex}
+
+@app.get("/dqn_status")
+async def get_dqn_status():
+    return dqn_validator.get_status()

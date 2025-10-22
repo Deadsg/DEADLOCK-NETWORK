@@ -4,7 +4,7 @@ import numpy as np
 import json
 import os
 
-from DEADSGOLD.blockchain.transaction import Transaction
+from blockchain.transaction import Transaction
 
 class DQNValidator:
     def __init__(self, model_path=None):

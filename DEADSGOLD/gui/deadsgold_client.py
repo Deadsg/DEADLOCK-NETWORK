@@ -1,11 +1,11 @@
 import requests
 import threading
 import time
-from DEADSGOLD.wallet.wallet import Wallet
-from DEADSGOLD.blockchain.transaction import Transaction
+from wallet.wallet import Wallet
+from blockchain.transaction import Transaction
 
 class DeadsgoldClient:
-    def __init__(self, api_url="http://127.0.0.1:5000"):
+    def __init__(self, api_url="http://127.0.0.1:8000"):
         self.api_url = api_url
         self.wallet = Wallet()
         self.is_mining = False
@@ -13,12 +13,12 @@ class DeadsgoldClient:
         self.mining_callback = None
 
     def get_blockchain_status(self):
-        response = requests.get(f"{self.api_url}/chain")
+        response = requests.get(f"{self.api_url}/blockchain/status")
         if response.status_code == 200:
             chain_data = response.json()
             return {
-                "block_height": chain_data['length'],
-                "last_block_hash": chain_data['chain'][-1]['hash'],
+                "block_height": chain_data['chain_length'],
+                "last_block_hash": chain_data['last_block']['hash'],
                 "difficulty": chain_data['difficulty'], # Assuming API returns difficulty
             }
         return None
@@ -28,7 +28,7 @@ class DeadsgoldClient:
 
     def get_wallet_balance(self):
         address = self.get_wallet_address()
-        response = requests.get(f"{self.api_url}/balance/{address}")
+        response = requests.get(f"{self.api_url}/wallet/{address}/balance")
         if response.status_code == 200:
             return response.json()['balance']
         return None
@@ -59,7 +59,7 @@ class DeadsgoldClient:
             "amount": transaction.amount,
             "signature": transaction.signature.hex() if transaction.signature else None # Assuming signature is bytes
         }
-        response = requests.post(f"{self.api_url}/transactions/new", json=payload)
+        response = requests.post(f"{self.api_url}/transaction/new", json=payload)
         return response.status_code == 201
 
     def start_mining(self, callback=None):
@@ -83,7 +83,7 @@ class DeadsgoldClient:
     def _mining_loop(self):
         while self.is_mining:
             print("Miner: Requesting to mine a new block via API...")
-            response = requests.get(f"{self.api_url}/mine")
+            response = requests.post(f"{self.api_url}/mine")
             if response.status_code == 200:
                 mining_data = response.json()
                 print(f"Miner: New block {mining_data['index']} mined: {mining_data['previous_hash']}")

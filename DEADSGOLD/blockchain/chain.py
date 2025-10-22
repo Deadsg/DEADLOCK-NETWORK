@@ -1,10 +1,10 @@
 
 import hashlib
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
-from DEADSGOLD.wallet.wallet import Wallet
-from DEADSGOLD.dqn.validator import DQNValidator
-from DEADSGOLD.miner.miner import Miner
+from blockchain.block import Block
+from blockchain.transaction import Transaction
+from wallet.wallet import Wallet
+from dqn.validator import DQNValidator
+from miner.miner import Miner
 import time
 
 class Blockchain:
@@ -115,3 +115,26 @@ class Blockchain:
         Validates the proof: Does the hash of the block contain <difficulty> leading zeros?
         """
         return self.miner.valid_proof_hash(self.last_block, block.transactions, block.nonce, self.difficulty)
+
+    def mine_local(self):
+        """
+        Mines a new block using a local proof-of-work mechanism.
+        """
+        last_block = self.last_block
+        last_proof = last_block.nonce
+        
+        proof = 0
+        while not self.valid_proof_local(last_proof, proof, self.difficulty):
+            proof += 1
+
+        # Create the new block
+        block = self.new_block(proof)
+        return block
+
+    def valid_proof_local(self, last_proof, proof, difficulty):
+        """
+        Validates the proof: Does the hash of the proof contain <difficulty> leading zeros?
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:difficulty] == '0' * difficulty

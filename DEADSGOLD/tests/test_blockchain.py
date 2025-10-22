@@ -1,9 +1,9 @@
 
 import unittest
 import hashlib
-from DEADSGOLD.blockchain.chain import Blockchain
-from DEADSGOLD.blockchain.block import Block
-from DEADSGOLD.blockchain.transaction import Transaction
+from blockchain.chain import Blockchain
+from blockchain.block import Block
+from blockchain.transaction import Transaction
 
 class TestBlockchain(unittest.TestCase):
 
