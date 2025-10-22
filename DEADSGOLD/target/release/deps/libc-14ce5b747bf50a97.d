@@ -1,0 +1,11 @@
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\liblibc-14ce5b747bf50a97.rmeta: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\macros.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\fixed_width_ints.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\mod.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\msvc\mod.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\liblibc-14ce5b747bf50a97.rlib: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\macros.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\fixed_width_ints.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\mod.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\msvc\mod.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libc-14ce5b747bf50a97.d: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\macros.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\fixed_width_ints.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\mod.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\msvc\mod.rs
+
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src/lib.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\macros.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\fixed_width_ints.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\mod.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\libc-0.2.169\src\windows\msvc\mod.rs:

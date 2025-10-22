@@ -1,0 +1,1 @@
+cargo:rustc-env=MIME_TYPES_GENERATED_PATH=C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\build\mime_guess-a76786c58476234a\out\mime_types_generated.rs

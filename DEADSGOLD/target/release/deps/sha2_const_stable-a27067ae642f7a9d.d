@@ -1,0 +1,10 @@
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libsha2_const_stable-a27067ae642f7a9d.rmeta: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\constants.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\sha.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\util.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libsha2_const_stable-a27067ae642f7a9d.rlib: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\constants.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\sha.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\util.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\sha2_const_stable-a27067ae642f7a9d.d: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\constants.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\sha.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\util.rs
+
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\lib.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\constants.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\sha.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\sha2-const-stable-0.1.0\src\util.rs:

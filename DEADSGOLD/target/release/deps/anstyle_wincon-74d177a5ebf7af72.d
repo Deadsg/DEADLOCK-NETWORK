@@ -1,0 +1,10 @@
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libanstyle_wincon-74d177a5ebf7af72.rmeta: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\ansi.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\stream.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\windows.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libanstyle_wincon-74d177a5ebf7af72.rlib: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\ansi.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\stream.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\windows.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\anstyle_wincon-74d177a5ebf7af72.d: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src/lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\ansi.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\stream.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\windows.rs
+
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src/lib.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\ansi.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\stream.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\anstyle-wincon-3.0.6\src\windows.rs:

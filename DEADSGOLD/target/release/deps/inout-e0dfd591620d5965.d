@@ -1,0 +1,11 @@
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libinout-e0dfd591620d5965.rmeta: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\errors.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout_buf.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\reserved.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\libinout-e0dfd591620d5965.rlib: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\errors.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout_buf.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\reserved.rs
+
+C:\Users\deads\OneDrive\Documents\AGI\DEADLOCK-NETWORK\DEADSGOLD\target\release\deps\inout-e0dfd591620d5965.d: C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\lib.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\errors.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout_buf.rs C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\reserved.rs
+
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\lib.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\errors.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\inout_buf.rs:
+C:\Users\deads\.cargo\registry\src\index.crates.io-6f17d22bba15001f\inout-0.1.3\src\reserved.rs:

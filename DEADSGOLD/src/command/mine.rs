@@ -294,7 +294,7 @@ impl Miner {
                     let progress_bar = progress_bar.clone();
                     let nonce = nonce_indices[i.id];
                     let mut memory = equix::SolverMemory::new();
-                    let pool_channel = pool_channel.clone();
+                    let _pool_channel = pool_channel.clone();
                     move || {
                         // Pin to core
                         let _ = core_affinity::set_for_current(i);
