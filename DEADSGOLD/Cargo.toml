@@ -1,5 +1,3 @@
 [workspace]
-members = [
-    "solana_program",
-    "coal_cli_repo",
+members = ["deadsgold-miner"
 ]

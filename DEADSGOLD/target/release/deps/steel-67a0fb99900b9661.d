@@ -1,0 +1,12 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/steel-67a0fb99900b9661.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/traits.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/utils.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libsteel-67a0fb99900b9661.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/traits.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/utils.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libsteel-67a0fb99900b9661.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/traits.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/utils.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/cpi.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/loaders.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/macros.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/traits.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/steel-1.3.0/src/utils.rs:

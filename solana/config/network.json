@@ -1,0 +1,11 @@
+{
+  "network": "devnet",
+  "program_id": "",
+  "mint_address": "",
+  "q_parameters": {
+    "alpha": 0.7,
+    "gamma": 0.9,
+    "lambda": 0.05
+  },
+  "reward_curve": []
+}

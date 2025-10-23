@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/cipher-2ccb2d4f747f9a05.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/block.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/common.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/errors.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/stream.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libcipher-2ccb2d4f747f9a05.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/block.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/common.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/errors.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/stream.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libcipher-2ccb2d4f747f9a05.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/block.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/common.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/errors.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/stream.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/block.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/common.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/errors.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cipher-0.3.0/src/stream.rs:

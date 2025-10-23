@@ -1,0 +1,14 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/deps/libserde-e628ccf93c8bcc43.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/build/serde-132ce84f3f15a96c/out/private.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/deps/libserde-e628ccf93c8bcc43.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/build/serde-132ce84f3f15a96c/out/private.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/deps/serde-e628ccf93c8bcc43.d: /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/build/serde-132ce84f3f15a96c/out/private.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs:
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/build/serde-132ce84f3f15a96c/out/private.rs:
+
+# env-dep:OUT_DIR=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/target/release/build/serde-132ce84f3f15a96c/out
