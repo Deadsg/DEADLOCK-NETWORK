@@ -17,7 +17,7 @@ use crate::{
 };
 
 fn get_reprocessor_address(signer: &Pubkey) -> Pubkey {
-    Pubkey::find_program_address(&[REPROCESSOR, signer.as_ref()], &Pubkey::from_str("4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka").unwrap()).0
+    Pubkey::find_program_address(&[REPROCESSOR, signer.as_ref()], &Pubkey::from_str("8KWTy2J2ygMFoht4KbL2UNbAkYnt8rPsSW96TrUdxcda").unwrap()).0
 }
 
 async fn get_reprocessor(client: &RpcClient, signer: &Pubkey) -> Option<Reprocessor> {

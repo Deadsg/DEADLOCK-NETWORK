@@ -1,8 +1,8 @@
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/solana_version-b20ea77a62efa895.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/solana_version-b20ea77a62efa895.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
 
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libsolana_version-b20ea77a62efa895.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/libsolana_version-b20ea77a62efa895.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
 
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libsolana_version-b20ea77a62efa895.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/libsolana_version-b20ea77a62efa895.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs
 
 /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/lib.rs:
 /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-version-1.18.26/src/legacy.rs:

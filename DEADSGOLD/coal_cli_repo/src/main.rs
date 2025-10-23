@@ -93,7 +93,7 @@ enum Commands {
     #[command(about = "Stake to earn a rewards multiplier")]
     Stake(StakeArgs),
 
-    #[command(about = "Send COAL to anyone, anywhere in the world.")]
+    #[command(about = "Send DEADSGOLD to anyone, anywhere in the world.")]
     Transfer(TransferArgs),
 
     #[command(about = "Reprocess")]
@@ -227,10 +227,6 @@ struct Args {
 
 #[tokio::main]
 async fn main() {
-    println!("COAL_MINT_ADDRESS: {}", coal_api::consts::COAL_MINT_ADDRESS);
-    println!("WOOD_MINT_ADDRESS: {}", coal_api::consts::WOOD_MINT_ADDRESS);
-    println!("INGOTS_MINT_ADDRESS: {}", smelter_api::consts::MINT_ADDRESS);
-    println!("ORE_MINT_ADDRESS: {}", ore_api::consts::MINT_ADDRESS);
     let args = Args::parse();
 
     // Load the config file from custom path, the default path, or use default config values

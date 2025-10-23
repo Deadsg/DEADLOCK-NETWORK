@@ -1,1 +1,1 @@
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/libsolana_program.so: /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/solana_program/src/lib.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/libsolana_program.so: /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/solana_program/src/lib.rs

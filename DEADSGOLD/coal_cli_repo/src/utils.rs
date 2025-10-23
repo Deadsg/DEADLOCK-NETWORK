@@ -315,7 +315,7 @@ pub fn get_resource_from_str(resource: &Option<String>) -> Resource {
         Some(resource) => match resource.as_str() {
             "ore" => Resource::Ore,
             "ingot" => Resource::Ingots,
-            "coal" => Resource::Coal,
+            "deadsgold" => Resource::Coal,
             "wood" => Resource::Wood,
             "chromium" => Resource::Chromium,
             _ => {
@@ -329,7 +329,7 @@ pub fn get_resource_from_str(resource: &Option<String>) -> Resource {
 
 pub fn get_resource_name(resource: &Resource) -> String {
     match resource {
-        Resource::Coal => "COAL".to_string(),
+        Resource::Coal => "DEADSGOLD".to_string(),
         Resource::Wood => "WOOD".to_string(),
         Resource::Ingots => "INGOTS".to_string(),
         Resource::Ore => "ORE".to_string(),
@@ -366,8 +366,9 @@ pub fn get_tool_pubkey(authority: Pubkey, resource: &Resource) -> Pubkey {
 
 #[cached]
 pub fn proof_pubkey(authority: Pubkey, resource: Resource) -> Pubkey {
+    let deadsgold_program_id = Pubkey::from_str("8KWTy2J2ygMFoht4KbL2UNbAkYnt8rPsSW96TrUdxcda").unwrap();
     let program_id = match resource {
-        Resource::Coal => &Pubkey::from_str("4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka").unwrap(),
+        Resource::Coal => &deadsgold_program_id,
         Resource::Wood => &coal_api::ID,
         Resource::Ore => &ore_api::ID,
         Resource::Ingots => &smelter_api::ID,

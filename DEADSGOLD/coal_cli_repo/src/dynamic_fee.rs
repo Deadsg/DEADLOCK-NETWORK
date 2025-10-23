@@ -1,6 +1,4 @@
 use crate::Miner;
-use std::str::FromStr;
-use solana_program::pubkey::Pubkey;
 
 use coal_api::consts::COAL_BUS_ADDRESSES;
 use reqwest::Client;
@@ -49,7 +47,7 @@ impl Miner {
 
         // Build fee estimate request
         let client = Client::new();
-        let ore_addresses: Vec<String> = std::iter::once(Pubkey::from_str("4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka").unwrap().to_string())
+        let ore_addresses: Vec<String> = std::iter::once(Pubkey::from_str("8KWTy2J2ygMFoht4KbL2UNbAkYnt8rPsSW96TrUdxcda").unwrap().to_string())
             .chain(COAL_BUS_ADDRESSES.iter().map(|pubkey| pubkey.to_string()))
             .collect();
         let body = match strategy {

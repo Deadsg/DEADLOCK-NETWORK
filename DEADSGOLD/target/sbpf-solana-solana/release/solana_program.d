@@ -1,1 +1,0 @@
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/sbpf-solana-solana/release/solana_program.so: /mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/solana_program/src/lib.rs

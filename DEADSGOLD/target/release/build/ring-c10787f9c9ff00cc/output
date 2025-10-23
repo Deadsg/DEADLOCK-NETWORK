@@ -12,7 +12,7 @@ cargo:rerun-if-env-changed=CARGO_CFG_TARGET_OS
 cargo:rerun-if-env-changed=CARGO_CFG_TARGET_ENV
 cargo:rerun-if-env-changed=CARGO_CFG_TARGET_ENDIAN
 OPT_LEVEL = Some(3)
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/ring-c10787f9c9ff00cc/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/ring-c10787f9c9ff00cc/out)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
 HOST = Some(x86_64-unknown-linux-gnu)
@@ -69,7 +69,7 @@ exit status: 0
 exit status: 0
 cargo:rustc-link-lib=static=ring_core_0_17_14_
 OPT_LEVEL = Some(3)
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/ring-c10787f9c9ff00cc/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/ring-c10787f9c9ff00cc/out)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
 HOST = Some(x86_64-unknown-linux-gnu)
@@ -96,7 +96,7 @@ CFLAGS_x86_64_unknown_linux_gnu = None
 cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
 CFLAGS_x86_64-unknown-linux-gnu = None
 cargo:rustc-link-lib=static=ring_core_0_17_14__test
-cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/ring-c10787f9c9ff00cc/out
+cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/ring-c10787f9c9ff00cc/out
 cargo:rerun-if-changed=crypto/chacha/asm/chacha-armv4.pl
 cargo:rerun-if-changed=crypto/chacha/asm/chacha-armv8.pl
 cargo:rerun-if-changed=crypto/chacha/asm/chacha-x86.pl

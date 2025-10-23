@@ -9,7 +9,7 @@ cargo:rustc-check-cfg=cfg(blake3_neon, values(none()))
 cargo:rustc-check-cfg=cfg(blake3_wasm32_simd, values(none()))
 cargo:rerun-if-env-changed=CARGO_FEATURE_PURE
 cargo:rerun-if-env-changed=CARGO_FEATURE_NO_NEON
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
 HOST = Some(x86_64-unknown-linux-gnu)
@@ -19,7 +19,7 @@ HOST_CC = None
 CC = None
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
 RUSTC_WRAPPER = None
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out)
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
 CRATE_CC_NO_DEFAULTS = None
 TARGET = Some(x86_64-unknown-linux-gnu)
@@ -29,7 +29,7 @@ CFLAGS = None
 HOST_CFLAGS = None
 CFLAGS_x86_64_unknown_linux_gnu = None
 CFLAGS_x86_64-unknown-linux-gnu = None
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out)
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
 CRATE_CC_NO_DEFAULTS = None
 TARGET = Some(x86_64-unknown-linux-gnu)
@@ -44,7 +44,7 @@ cargo:rerun-if-env-changed=CARGO_FEATURE_PURE
 cargo:rustc-cfg=blake3_sse2_ffi
 cargo:rustc-cfg=blake3_sse41_ffi
 cargo:rustc-cfg=blake3_avx2_ffi
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out)
 OPT_LEVEL = Some(3)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
@@ -74,11 +74,11 @@ HOST_ARFLAGS = None
 ARFLAGS_x86_64_unknown_linux_gnu = None
 ARFLAGS_x86_64-unknown-linux-gnu = None
 cargo:rustc-link-lib=static=blake3_sse2_sse41_avx2_assembly
-cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out
+cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out
 cargo:rerun-if-env-changed=CARGO_FEATURE_PURE
 cargo:rerun-if-env-changed=CARGO_FEATURE_PREFER_INTRINSICS
 cargo:rustc-cfg=blake3_avx512_ffi
-OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out)
+OUT_DIR = Some(/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out)
 OPT_LEVEL = Some(3)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
@@ -105,7 +105,7 @@ HOST_ARFLAGS = None
 ARFLAGS_x86_64_unknown_linux_gnu = None
 ARFLAGS_x86_64-unknown-linux-gnu = None
 cargo:rustc-link-lib=static=blake3_avx512_assembly
-cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/build/blake3-227b4d1bc95847e9/out
+cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/build/blake3-227b4d1bc95847e9/out
 cargo:rerun-if-env-changed=CARGO_FEATURE_NEON
 cargo:rerun-if-env-changed=CARGO_FEATURE_NO_NEON
 cargo:rerun-if-env-changed=CARGO_FEATURE_PURE

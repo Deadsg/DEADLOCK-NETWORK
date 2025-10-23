@@ -1,7 +1,7 @@
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/drillx-9b7b360759694329.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/drillx-9b7b360759694329.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
 
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libdrillx-9b7b360759694329.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/libdrillx-9b7b360759694329.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
 
-/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libdrillx-9b7b360759694329.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/libdrillx-9b7b360759694329.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs
 
 /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/drillx-2.2.0/src/lib.rs:
