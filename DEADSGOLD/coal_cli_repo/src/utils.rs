@@ -1,4 +1,5 @@
 use std::{io::Read, time::Duration};
+use std::str::FromStr;
 
 use cached::proc_macro::cached;
 use coal_api::{
@@ -338,7 +339,7 @@ pub fn get_resource_name(resource: &Resource) -> String {
 
 pub fn get_resource_mint(resource: &Resource) -> Pubkey {
     match resource {
-        Resource::Coal => coal_api::consts::COAL_MINT_ADDRESS,
+        Resource::Coal => Pubkey::from_str("BtyvvfnFiC599j5gcswiE13JDUGpySKZJ81BSd3cmzQG").unwrap(),
         Resource::Wood => coal_api::consts::WOOD_MINT_ADDRESS,
         Resource::Ingots => smelter_api::consts::MINT_ADDRESS,
         Resource::Ore => ore_api::consts::MINT_ADDRESS,
@@ -366,7 +367,7 @@ pub fn get_tool_pubkey(authority: Pubkey, resource: &Resource) -> Pubkey {
 #[cached]
 pub fn proof_pubkey(authority: Pubkey, resource: Resource) -> Pubkey {
     let program_id = match resource {
-        Resource::Coal => &coal_api::ID,
+        Resource::Coal => &Pubkey::from_str("4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka").unwrap(),
         Resource::Wood => &coal_api::ID,
         Resource::Ore => &ore_api::ID,
         Resource::Ingots => &smelter_api::ID,
@@ -385,7 +386,7 @@ pub fn proof_pubkey(authority: Pubkey, resource: Resource) -> Pubkey {
 
 #[cached]
 pub fn treasury_tokens_pubkey() -> Pubkey {
-    get_associated_token_address(&TREASURY_ADDRESS, &COAL_MINT_ADDRESS)
+    get_associated_token_address(&TREASURY_ADDRESS, &Pubkey::from_str("BtyvvfnFiC599j5gcswiE13JDUGpySKZJ81BSd3cmzQG").unwrap())
 }
 
 #[derive(Debug, Deserialize)]

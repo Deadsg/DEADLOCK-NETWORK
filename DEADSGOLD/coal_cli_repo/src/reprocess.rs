@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{sync::Arc, str::FromStr};
 use coal_utils::AccountDeserialize;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use tokio::time::{sleep, Duration};
@@ -17,7 +17,7 @@ use crate::{
 };
 
 fn get_reprocessor_address(signer: &Pubkey) -> Pubkey {
-    Pubkey::find_program_address(&[REPROCESSOR, signer.as_ref()], &coal_api::id()).0
+    Pubkey::find_program_address(&[REPROCESSOR, signer.as_ref()], &Pubkey::from_str("4inSouwXMDGvErbtrpgnBesCKi8yK2BKBT2L3v82wka").unwrap()).0
 }
 
 async fn get_reprocessor(client: &RpcClient, signer: &Pubkey) -> Option<Reprocessor> {

@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/ore_utils-e57eeac1ce9f803c.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/traits.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libore_utils-e57eeac1ce9f803c.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/traits.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/release/deps/libore_utils-e57eeac1ce9f803c.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/cpi.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/loaders.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/macros.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/traits.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/cpi.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/loaders.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/macros.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ore-utils-2.1.9/src/traits.rs:

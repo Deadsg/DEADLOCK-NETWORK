@@ -1,0 +1,5 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/openssl_macros-5c9003e75ab2e01b.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-macros-0.1.1/src/lib.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/deadsgold/target/release/deps/libopenssl_macros-5c9003e75ab2e01b.so: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-macros-0.1.1/src/lib.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/openssl-macros-0.1.1/src/lib.rs:
