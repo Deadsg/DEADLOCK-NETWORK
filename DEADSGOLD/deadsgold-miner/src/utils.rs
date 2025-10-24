@@ -1,15 +1,14 @@
 use std::{io::Read, time::Duration};
-use std::str::FromStr;
 
 use cached::proc_macro::cached;
 use serde::Deserialize;
 use coal_utils::AccountDeserialize;
 use dead_api::consts::BUS_ADDRESSES as DEAD_BUS_ADDRESSES;
+use dead_api::consts::BUS_COUNT;
 use solana_client::client_error::{ClientError, ClientErrorKind};
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_program::{pubkey::Pubkey, sysvar};
 use solana_sdk::{clock::Clock, hash::Hash};
-use spl_associated_token_account::get_associated_token_address;
 use tokio::time::sleep;
 
 pub const BLOCKHASH_QUERY_RETRIES: usize = 5;
@@ -157,14 +156,14 @@ pub fn get_config_pubkey(resource: &Resource) -> Pubkey {
 pub fn deserialize_config(data: &[u8], resource: &Resource) -> ConfigType {
     match resource {
         _ => ConfigType::General(
-            *dead_api::state::Config::try_from_bytes(&data).expect("Failed to parse config account")
+            *dead_api::state::Config::try_from(&data).expect("Failed to parse config account")
         ),
     }
 }
 
 pub fn deserialize_tool(data: &[u8], resource: &Resource) -> ToolType {
     match resource {
-        _ => ToolType::Tool(*dead_api::state::Tool::try_from_bytes(&data).expect("Failed to parse tool account")),
+        _ => ToolType::Tool(*dead_api::state::Tool::try_from(&data).expect("Failed to parse tool account")),
     }
 }
 
@@ -206,7 +205,7 @@ pub async fn get_proof(client: &RpcClient, resource: &Resource, address: Pubkey)
         .expect("Failed to get proof account");
 
     match resource {
-        _ => ProofType::Proof(*dead_api::state::Proof::try_from_bytes(&data).expect("Failed to parse proof account")),
+        _ => ProofType::Proof(*dead_api::state::Proof::try_from(&data).expect("Failed to parse proof account")),
     }
 }
 

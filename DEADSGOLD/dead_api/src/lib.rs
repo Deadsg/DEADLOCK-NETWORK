@@ -27,6 +27,7 @@ pub mod consts {
     pub const CONFIG: &[u8] = b"config";
     pub const BUS: &[u8] = b"bus";
 
+    pub const ONE_MINUTE: i64 = 60;
     pub const COAL_EPOCH_DURATION: i64 = 60 * 60 * 24;
     pub const WOOD_EPOCH_DURATION: i64 = 60 * 60 * 24;
 }

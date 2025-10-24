@@ -29,62 +29,8 @@ struct Miner {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    #[command(about = "Fetch an account balance")]
-    Balance(BalanceArgs),
-
-    #[command(about = "Benchmark your hashpower")]
-    Benchmark(BenchmarkArgs),
-
-    #[command(about = "Fetch the bus account balances")]
-    Busses(BussesArgs),
-
-    #[command(about = "Chop some wood")]
-    Chop(ChopArgs),
-
-    #[command(about = "Claim your mining rewards")]
-    Claim(ClaimArgs),
-
-    #[command(about = "Close your account to recover rent")]
-    Close(CloseArgs),
-
-    #[command(about = "Fetch the program config")]
-    Config(ConfigArgs),
-
     #[command(about = "Start mining")]
     Mine(MineArgs),
-
-    #[command(about = "Reset the mining config")]
-    Replant(ReplantArgs),
-
-    #[command(about = "Fetch a proof account by address")]
-    Proof(ProofArgs),
-
-    #[command(about = "Fetch the current reward rate for each difficulty level")]
-    Rewards(RewardsArgs),
-
-    #[command(about = "Start smelting INGOTs")]
-    Smelt(SmeltArgs),
-
-    #[command(about = "Stake to earn a rewards multiplier")]
-    Stake(StakeArgs),
-
-    #[command(about = "Send DEADSGOLD to anyone, anywhere in the world.")]
-    Transfer(TransferArgs),
-
-    #[command(about = "Reprocess")]
-    Reprocess(ReprocessArgs),
-
-    #[command(about = "Craft a pickaxe")]
-    Craft(CraftArgs),
-
-    #[command(about = "Equip tool")]
-    Equip(EquipArgs),
-
-    #[command(about = "Unequip tool")]
-    Unequip(UnequipArgs),
-
-    #[command(about = "Inspect tool")]
-    Inspect(InspectArgs),
 }
 
 #[derive(Parser, Debug)]
@@ -215,62 +161,8 @@ async fn main() {
 
     // Execute user command.
     match args.command {
-        Commands::Balance(args) => {
-            miner.balance(args).await;
-        }
-        Commands::Benchmark(args) => {
-            miner.benchmark(args).await;
-        }
-        Commands::Busses(args) => {
-            miner.busses(args).await;
-        }
-        Commands::Chop(args) => {
-            miner.chop(args).await;
-        }
-        Commands::Claim(args) => {
-            miner.claim(args).await;
-        }
-        Commands::Close(args) => {
-            miner.close(args).await;
-        }
-        Commands::Config(args) => {
-            miner.config(args).await;
-        }
         Commands::Mine(args) => {
             miner.mine(args).await;
-        }
-        Commands::Replant(args) => {
-            miner.replant(args).await;
-        }
-        Commands::Proof(args) => {
-            miner.proof(args).await;
-        }
-        Commands::Rewards(args) => {
-            miner.rewards(args).await;
-        }
-        Commands::Smelt(args) => {
-            miner.smelt(args).await;
-        }
-        Commands::Stake(args) => {
-            miner.stake(args).await;
-        }
-        Commands::Transfer(args) => {
-            miner.transfer(args).await;
-        }
-        Commands::Craft(args) => {
-            miner.craft(args).await;
-        }
-        Commands::Equip(args) => {
-            miner.equip(args).await;
-        }
-        Commands::Unequip(args) => {
-            miner.unequip(args).await;
-        }
-        Commands::Inspect(args) => {
-            miner.inspect(args).await;
-        }
-        Commands::Reprocess(args) => {
-            miner.reprocess(args).await;
         }
     }
 }

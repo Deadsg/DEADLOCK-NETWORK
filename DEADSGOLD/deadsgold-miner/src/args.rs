@@ -81,17 +81,7 @@ pub struct ConfigArgs {
     pub resource: Option<String>,
 }
 
-#[cfg(feature = "admin")]
-#[derive(Parser, Debug)]
-pub struct InitializeArgs {}
 
-#[cfg(feature = "admin")]
-#[derive(Parser, Debug)]
-pub struct VerifyArgs {}
-
-#[cfg(feature = "admin")]
-#[derive(Parser, Debug)]
-pub struct NewToolArgs {}
 
 #[derive(Parser, Debug)]
 pub struct CraftArgs {

@@ -8,22 +8,20 @@ use rand::Rng;
 use solana_program::{pubkey::Pubkey, instruction::Instruction, system_program};
 use solana_rpc_client::spinner;
 use solana_sdk::signer::Signer;
-use tokio;
 use dead_api::state::Bus;
 use coal_utils::AccountDeserialize;
-use dead_api::consts::{COAL_EPOCH_DURATION, WOOD_EPOCH_DURATION};
+use dead_api::consts::{COAL_EPOCH_DURATION, WOOD_EPOCH_DURATION, ONE_MINUTE, BUS_COUNT};
 
 
 use crate::{
     args::MineArgs,
-    send_and_confirm::ComputeBudget,
     utils::{
         Resource, ConfigType,
         amount_u64_to_string,
         get_clock, get_config,
         get_updated_proof_with_authority, 
         proof_pubkey, get_resource_from_str, get_resource_name, 
-        get_resource_bus_addresses, get_tool_pubkey, get_config_pubkey, 
+        get_resource_bus_addresses, get_config_pubkey, 
         deserialize_tool, deserialize_config,
         ToolType,
     },
@@ -36,10 +34,6 @@ impl Miner {
         let merged = args.merged.clone();
 
         match merged.as_str() {
-            "ore" => {
-                println!("{} {}", "INFO".bold().green(), "Started merged mining...");
-                self.process_mine_merged(args).await;
-            }
             "none" => {
                 self.process_mine(args).await;
             }
@@ -61,8 +55,6 @@ impl Miner {
         }
 
         println!("{} {} {} {}", "INFO".bold().green(), "Started", get_resource_name(&resource), get_action_name(&resource));
-
-        self.open(resource.clone()).await;
 
         // Check num threads
         self.check_num_cores(args.cores);
@@ -166,8 +158,8 @@ impl Miner {
                         signer.pubkey(),
                         signer.pubkey(),
                         self.find_bus(Resource::Dead).await,
-                        solution.hash,
-                        solution.nonce,
+                        solution.d,
+                        solution.n,
                     ));
                 },
                 _ => {
@@ -176,7 +168,7 @@ impl Miner {
             }
 
             // Submit transactions
-            self.send_and_confirm(&ixs, ComputeBudget::Fixed(compute_budget), false).await.ok();
+
         }
     }
 
@@ -320,10 +312,6 @@ impl Miner {
                 .saturating_add(COAL_EPOCH_DURATION)
                 .saturating_sub(5) // Buffer
                 .le(&clock.unix_timestamp),
-            ConfigType::Wood(config) => config.last_reset_at
-                .saturating_add(WOOD_EPOCH_DURATION)
-                .saturating_sub(5) // Buffer
-                .le(&clock.unix_timestamp),
         }
     }
 
@@ -344,7 +332,7 @@ impl Miner {
             let mut top_bus = bus_addresses[0];
             for account in accounts {
                 if let Some(account) = account {
-                    if let Ok(bus) = dead_api::state::Bus::try_from_bytes(&account.data) {
+                    if let Ok(bus) = dead_api::state::Bus::try_from(&account.data) {
                         if bus.rewards.gt(&top_bus_balance) {
                             top_bus_balance = bus.rewards;
                             top_bus = bus_addresses[bus.id as usize];
