@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/sha1-dc8b15134195a4bc.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/consts.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/soft.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/x86.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libsha1-dc8b15134195a4bc.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/consts.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/soft.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/x86.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libsha1-dc8b15134195a4bc.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/consts.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/soft.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/x86.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/consts.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/soft.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sha-1-0.9.8/src/compress/x86.rs:

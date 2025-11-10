@@ -1,0 +1,11 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/ascii-cd713643f5605969.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_char.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_str.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_string.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/free_functions.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libascii-cd713643f5605969.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_char.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_str.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_string.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/free_functions.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libascii-cd713643f5605969.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_char.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_str.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_string.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/free_functions.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_char.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_str.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/ascii_string.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ascii-0.9.3/src/free_functions.rs:

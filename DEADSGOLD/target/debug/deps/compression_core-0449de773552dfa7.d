@@ -1,0 +1,10 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/compression_core-0449de773552dfa7.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/level.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/unshared.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/util.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libcompression_core-0449de773552dfa7.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/level.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/unshared.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/util.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libcompression_core-0449de773552dfa7.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/level.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/unshared.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/util.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/level.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/unshared.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/compression-core-0.4.29/src/util.rs:

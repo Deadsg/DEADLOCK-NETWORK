@@ -1,0 +1,9 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/cached_proc_macro-5241af313c9e8c5b.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/cached.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/helpers.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/io_cached.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/once.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libcached_proc_macro-5241af313c9e8c5b.so: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/cached.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/helpers.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/io_cached.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/once.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/cached.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/helpers.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/io_cached.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cached_proc_macro-0.18.1/src/once.rs:

@@ -1,0 +1,10 @@
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/solana_instruction-df6b3c452d29f32f.d: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libsolana_instruction-df6b3c452d29f32f.rlib: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs
+
+/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/deps/libsolana_instruction-df6b3c452d29f32f.rmeta: /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs /home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs
+
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/lib.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/account_meta.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/error.rs:
+/home/deadsg/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-instruction-2.3.0/src/syscalls.rs:

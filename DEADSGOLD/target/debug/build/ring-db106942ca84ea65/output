@@ -1,0 +1,3 @@
+cargo:rustc-link-lib=static=ring-core
+cargo:rustc-link-lib=static=ring-test
+cargo:rustc-link-search=native=/mnt/c/Users/deads/OneDrive/Documents/AGI/DEADLOCK-NETWORK/DEADSGOLD/target/debug/build/ring-db106942ca84ea65/out
